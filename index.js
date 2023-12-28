@@ -1,3 +1,7 @@
+/*    
+You can edit your prompt here.
+*/  
+    
 import { Configuration, OpenAIApi } from "openai";
 import { process } from './env';
 
@@ -6,6 +10,10 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
+
+document.getElementById("again-btn").addEventListener("click", () => {
+  location.reload();
+})
 
 document.getElementById("submit-btn").addEventListener("click", () => {
   const productName = document.getElementById("name").value;
@@ -19,12 +27,7 @@ async function getCopySuggestion(productName, productDesc, productTarget) {
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     
-/*    
-Challenge:
-  1. Add a second example here. Be sure to make it similar in design to the first.
-  2. Remember to use separators 
-*/  
-    
+
     
     prompt: `Use a product name, a product description and a target market to create advertising copy for a product.
     ###
