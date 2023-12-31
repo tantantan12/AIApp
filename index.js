@@ -1,7 +1,7 @@
 /*    
 You can edit your prompt here.
 */  
-    
+    /*
 import { Configuration, OpenAIApi } from "openai";
 import { process } from './env';
 
@@ -12,7 +12,7 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
-
+*/
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
 })
