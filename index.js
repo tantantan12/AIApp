@@ -2,29 +2,30 @@
 You can edit your prompt here.
 */  
     
-//import { Configuration, OpenAIApi } from "openai";
-//import { process } from './env';
+import { Configuration, OpenAIApi } from "openai";
+import { process } from './env';
 
-//const configuration = new Configuration({
-//  apiKey: process.env.OPENAI_API_KEY,
-//});
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-//const openai = new OpenAIApi(configuration);
+const openai = new OpenAIApi(configuration);
 
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
+
   const productName = document.getElementById("name").value;
   const productDesc = document.getElementById("desc").value;
   const productTarget = document.getElementById("target").value;
+ // fetchReply(productName, productDesc, productTarget)
   getCopySuggestion(productName, productDesc, productTarget);
 })
 
 
-
-async function fetchReply(){
+/*async function fetchReply(){
   const url = 'https://lambent-sunflower-9cb580.netlify.app/.netlify/functions/fetchAI'
   
   const response = await fetch(url, {
@@ -35,28 +36,12 @@ async function fetchReply(){
       body: conversationStr
   })
   const data = await response.json()
-  console.log(data)
-/*
-Challenge:
-1. Make a fetch request to the url using the 
-   following details. 
-   - The method should be 'POST'
-   - In the headers, the 'content-type' should 
-     be 'text/plain'
-   - The body should hold conversationStr
-2. Save the response to a const and log it out. 
-3. Copy and paste the updated fetchReply function 
-   to VS Code and delete any unnecessary code from 
-   index.js
-4. Push the changes to GitHub to trigger a
-   redeploy.
-5. Navigate to your Netlify site, hit send 
-   and see what you get in the console. (You 
-   should see "Hello World" in an object).
+
+ // conversationStr+=` ${data.reply.choices[0].text} ->`
+//  renderTypewriterText(data.reply.choices[0].text)
+  console.log(data)}
 */
-  // conversationStr += ` ${response.data.choices[0].text} \n`
-  // renderTypewriterText(response.data.choices[0].text)
-}
+
 
 
 
