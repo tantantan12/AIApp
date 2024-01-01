@@ -68,9 +68,6 @@ async function fetchReply(){
 async function getCopySuggestion(productName, productDesc, productTarget) {
   const response = await openai.createCompletion({
     model: "text-davinci-003",
-    
-
-    
     prompt: `Use a product name, a product description and a target market to create advertising copy for a product.
     ###
     product name: Flask Tie
@@ -83,10 +80,10 @@ async function getCopySuggestion(productName, productDesc, productTarget) {
     product traget market: ${productTarget}
     advertising copy: 
     `,
-    presence_penalty: 0,
-        frequency_penalty: 0.3,
+   // presence_penalty: 0,
+   //     frequency_penalty: 0.3,
         max_tokens: 100,
-        temperature: 0,
+    //    temperature: 0,
   });
   document.getElementById('ad-output').insertAdjacentText('beforeend', response.data.choices[0].text.trim())
   document.getElementById('ad-input').style.display = 'none'

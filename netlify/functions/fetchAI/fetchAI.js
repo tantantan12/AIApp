@@ -12,16 +12,13 @@ const handler = async (event) => {
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: event.body,
-            max_tokens: 100,
-            presence_penalty: 0.3,
-            frequency_penalty: 0,
-            temperature: 0,
-            stop: ['\n', '->']
+        presence_penalty: 0,
+        frequency_penalty: 0.3,
+        max_tokens: 100,
+        temperature: 0,
         })
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: "hi" }),
-
             body: JSON.stringify({
                 reply: response.data                
 /*
