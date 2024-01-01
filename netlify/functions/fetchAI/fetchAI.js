@@ -7,10 +7,11 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 const handler = async (event) => {
+    console.info(event.body);
     try {
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: event.body,
+            prompt: 'Use a product name, a product description and a target market to create advertising copy for a product ',
             max_tokens: 100,
             presence_penalty: 0.3,
             frequency_penalty: 0,
