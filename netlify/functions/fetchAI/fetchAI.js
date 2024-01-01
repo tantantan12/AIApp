@@ -11,7 +11,7 @@ const handler = async (event) => {
     try {
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: 'Use a product name, a product description and a target market to create advertising copy for a product ',
+            prompt: event.body,
             max_tokens: 100,
             presence_penalty: 0.3,
             frequency_penalty: 0,
