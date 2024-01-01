@@ -51,7 +51,7 @@ async function fetchReply(){
       body: prompt
   })
   const data = await response.json()
-  console.info(data);
+  console.info(prompt);
 
  prompt+=` ${data.reply.choices[0].text} ->`
  document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim())
