@@ -7,7 +7,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 const handler = async (event) => {
-    console.info(event.body);
+    
     try {
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -20,6 +20,8 @@ const handler = async (event) => {
         })
         return {
             statusCode: 200,
+            body: JSON.stringify({ message: event.body }),
+
             body: JSON.stringify({
                 reply: response.data                
 /*
