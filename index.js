@@ -53,13 +53,15 @@ async function fetchReply(){
   const data = await response.json()
 
  prompt+=` ${data.reply.choices[0].text} ->`
- document.getElementById('ad-output').insertAdjacentText('beforeend', response.data.choices[0].text.trim())
+ document.getElementById('ad-output').insertAdjacentText('beforeend', data.choices[0].text.trim())
  document.getElementById('ad-input').style.display = 'none'
  document.getElementById('ad-output').style.display = 'block'
   console.log(data)}
 
 
-
+ // conversationStr+=` ${data.reply.choices[0].text} ->`
+ // renderTypewriterText(data.reply.choices[0].text)
+ // console.log(data)
 
 
 async function getCopySuggestion(productName, productDesc, productTarget) {
