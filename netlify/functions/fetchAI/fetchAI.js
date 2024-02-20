@@ -7,11 +7,10 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 const handler = async (event) => {
-    
     try {
         const response = await openai.createCompletion({
-            model: 'gpt-3.5-turbo',
-            prompt: [{ role: "system", content: event.body }],
+            model: 'gpt-3.5-turbo-instruct',
+            prompt: event.body,
         presence_penalty: 0,
         frequency_penalty: 0.3,
         max_tokens: 100,
