@@ -8,9 +8,11 @@ const openai = new OpenAIApi(configuration)
 
 const handler = async (event) => {
     try {
-        const response = await openai.createCompletion({
-            model: 'gpt-3.5-turbo-instruct',
-            prompt: event.body ,
+        const response = await openai.chat.completions.create({
+            model: 'gpt-3.5-turbo',
+            prompt: [
+    {"role": "system","content": "you are a marketing specialist."},
+    {"role": "user",      "content":  event.body    }] ,
         presence_penalty: 0,
         frequency_penalty: 0.3,
         max_tokens: 100,
