@@ -9,8 +9,8 @@ const handler = async (event) => {
         const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
             messages: [
-    {"role": "system","content": "you are a marketing specialist."},
-    {"role": "user",      "content":  event.body    }] ,
+    {role: "system",content: "you are a marketing specialist."},
+    {role: "user", content:  event.body    }] ,
         presence_penalty: 0,
         frequency_penalty: 0.3,
         max_tokens: 100,
@@ -18,7 +18,7 @@ const handler = async (event) => {
         })
         return {
             statusCode: 200,
-            body: response.data.choices[0].message.content.trim() //JSON.stringify({reply: response.data})
+            body:JSON.stringify({reply: response.data}) //response.data.choices[0].message.content.trim()
         }
     } catch (error) {
         return { statusCode: 500, body: error.toString() }
