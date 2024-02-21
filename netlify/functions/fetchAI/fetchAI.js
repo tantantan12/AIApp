@@ -6,7 +6,7 @@ const openai = new OpenAI({
 
 const handler = async (event) => {
     try {
-        const response = client.chat.completions.create({
+        const response = openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
             messages: [
     {role: "system",content: "you are a marketing specialist."},
