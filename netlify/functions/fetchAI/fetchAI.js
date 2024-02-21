@@ -8,7 +8,7 @@ const handler = async (event) => {
     try {
         const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
-            prompt: [
+            messages: [
     {"role": "system","content": "you are a marketing specialist."},
     {"role": "user",      "content":  event.body    }] ,
         presence_penalty: 0,
