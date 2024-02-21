@@ -18,16 +18,7 @@ const handler = async (event) => {
         })
         return {
             statusCode: 200,
-            body: JSON.stringify({
-                reply: response.data                
-/*
-Challenge:
-    1. Add a key value pair. The key should be 'reply' 
-       and the value should be response.data.
-    2. Paste the code into fetchAI.js in VS Code and push it 
-       to GitHub to redeploy and see what gets logged out. 
-*/
-            })
+            body: response.data.choices[0].message.content.trim() //JSON.stringify({reply: response.data})
         }
     } catch (error) {
         return { statusCode: 500, body: error.toString() }
