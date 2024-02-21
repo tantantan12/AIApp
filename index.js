@@ -50,11 +50,13 @@ async function fetchReply(){
       },
       body: prompt
   })
-  const data = await response.json()
+//  const data = await response.json()
+    const data = await response
   console.info(prompt);
 console.log(data);
  prompt+=` ${data.reply.choices[0].text} ->`
- document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim())
+ //document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim())
+document.getElementById('ad-output').insertAdjacentText('beforeend',data)
  document.getElementById('ad-input').style.display = 'none'
  document.getElementById('ad-output').style.display = 'block'
   }
@@ -64,29 +66,3 @@ console.log(data);
  // renderTypewriterText(data.reply.choices[0].text)
  // console.log(data)
 
-
-async function getCopySuggestion(productName, productDesc, productTarget) {
-  const response = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: `Use a product name, a product description and a target market to create advertising copy for a product.
-    ###
-    product name: Flask Tie
-    product description: A tie with a pouch to hold liquids and a straw to drink through
-    product traget market: office workers
-    advertising copy: Are you tired of having to worry about how much to drink throughout the day? With the Flask Tie, you can stay hydrated on-the-go! Our unique tie features a pouch that enables you to securely hold and sip your favorite drinks with the built-in straw! The water cooler is history! Long live Flask Tie!
-    ###
-    product name: ${productName}
-    product description: ${productDesc}
-    product traget market: ${productTarget}
-    advertising copy: 
-    `,
-   // presence_penalty: 0,
-   //     frequency_penalty: 0.3,
-        max_tokens: 100,
-    //    temperature: 0,
-  });
-  document.getElementById('ad-output').insertAdjacentText('beforeend', response.data.choices[0].text.trim())
-  document.getElementById('ad-input').style.display = 'none'
-  document.getElementById('ad-output').style.display = 'block'
-  console.log(response)
-}
