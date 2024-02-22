@@ -9,19 +9,18 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   const productTarget = document.getElementById("target").value;
   prompt += `Use a product name, a product description and a target market to create advertising copy for a product.
   ###
-  product name: Flask Tie
-  product description: A tie with a pouch to hold liquids and a straw to drink through
-  product traget market: office workers
-  advertising copy: Are you tired of having to worry about how much to drink throughout the day? With the Flask Tie, you can stay hydrated on-the-go! Our unique tie features a pouch that enables you to securely hold and sip your favorite drinks with the built-in straw! The water cooler is history! Long live Flask Tie!
+  product name: EcoPure Hydration Bottle
+  product description: A sustainable, vacuum-insulated water bottle that keeps drinks cold for 48 hours and hot for 24 hours. 
+  product target market: environmentally conscious consumers
+  advertising copy: "Stay refreshed and make a difference with the EcoPure Hydration Bottle – the last water bottle you'll ever need. Embrace the power of sustainability with our innovative design, crafted for the eco-warrior in all of us. Whether you're climbing mountains or navigating the urban jungle, keep your drinks ice-cold or steaming hot, all day long. Join the EcoPure movement and quench your thirst for change. #DrinkSustainably #EcoPureAdventure
   ###
   product name: ${productName}
   product description: ${productDesc}
   product traget market: ${productTarget}
   advertising copy: 
   `
-
   fetchReply()
-//  getCopySuggestion(productName, productDesc, productTarget);
+
 })
 
 
