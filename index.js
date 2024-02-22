@@ -1,19 +1,4 @@
-/*    
-You can edit your prompt here.
-*/  
-    /*
-import { Configuration, OpenAIApi } from "openai";
-import { process } from './env';
-
-let prompt = ''
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
-*/
-document.getElementById("again-btn").addEventListener("click", () => {
+ document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
 })
 
@@ -50,19 +35,15 @@ async function fetchReply(){
       },
       body: prompt
   })
-//  const data = await response.json()
-    const data = await response
+  const data = await response.json()
   console.info(prompt);
-console.log(data);
+
  prompt+=` ${data.reply.choices[0].text} ->`
- //document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim())
-document.getElementById('ad-output').insertAdjacentText('beforeend',data)
+ document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim())
  document.getElementById('ad-input').style.display = 'none'
  document.getElementById('ad-output').style.display = 'block'
-  }
+  console.log(data)}
 
 
- // conversationStr+=` ${data.reply.choices[0].text} ->`
- // renderTypewriterText(data.reply.choices[0].text)
- // console.log(data)
-
+ 
+ 
