@@ -1,4 +1,4 @@
- document.getElementById("again-btn").addEventListener("click", () => {
+document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
 })
 
@@ -19,13 +19,14 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   product traget market: ${productTarget}
   advertising copy: 
   `
+
   fetchReply()
 
 })
 
 
 async function fetchReply(){
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI'
+  const url = 'https://itom6219.app/.netlify/functions/fetchAI'
   
   const response = await fetch(url, {
       method: 'POST',
@@ -35,12 +36,10 @@ async function fetchReply(){
       body: prompt
   })
   const data = await response.json()
-  console.log(data);
- document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim());
- document.getElementById('ad-input').style.display = 'none';
+  console.info(prompt);
+
+ prompt+=` ${data.reply.choices[0].text} ->`
+ document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim())
+ document.getElementById('ad-input').style.display = 'none'
  document.getElementById('ad-output').style.display = 'block'
-  }
-
-
- 
- 
+  console.log(data)}
