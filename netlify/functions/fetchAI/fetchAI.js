@@ -18,9 +18,10 @@ const handler = async (event) => {
         temperature: 0,
         })
         return {
-            statusCode: 200,   
+            statusCode: 200,
             body: JSON.stringify({
                 reply: response.data                
+
             })
         }
     } catch (error) {
