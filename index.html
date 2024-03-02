@@ -2,11 +2,7 @@
 <html>
 
 <head>
-<script>
-  ga('send', 'pageview', {
-    'Branch':  '{{ BRANCH }}'
-  });
-</script>
+
 <script>
   analytics.track('pageview', {
     'Branch': '{{ getenv "BRANCH" }}'
