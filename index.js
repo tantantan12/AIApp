@@ -19,7 +19,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   product description: ${productDesc}
   product traget market: ${productTarget}
   advertising copy: 
-  `
+  `;
   gtag('event', 'submit', {
         'productName': productName,
         'productDesc': productDesc,
