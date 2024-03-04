@@ -1,5 +1,6 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
+  gtag('event', 'again');
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
@@ -18,9 +19,13 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   product description: ${productDesc}
   product traget market: ${productTarget}
   advertising copy: 
-  `
-
-  fetchReply()
+  `;
+  gtag('event', 'submit', {
+        'productName': productName,
+        'productDesc': productDesc,
+    'productTarget': productTarget
+      });
+  fetchReply();
 
 })
 
