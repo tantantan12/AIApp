@@ -95,7 +95,7 @@ button {
     font-size: 1.3rem;
 }
 
-.button:hover {
+button:hover {
       background-color:#59C3C3;
       transition: 0.7s;
   
