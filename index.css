@@ -96,7 +96,9 @@ button {
 }
 
 .button:hover {
-      background:#59C3C3;
+      background-color:#59C3C3;
+      transition: 0.7s;
+  
   }
 
  
