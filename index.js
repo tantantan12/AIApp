@@ -31,7 +31,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
 
 
 async function fetchReply(){
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI'     
+  const url = 'https://button--itom6219.netlify.app/.netlify/functions/fetchAI'     
   
   const response = await fetch(url, {
       method: 'POST',
