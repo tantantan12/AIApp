@@ -21,6 +21,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   advertising copy: 
   `;
   gtag('event', 'submit', {
+        'experiment': {{ BRANCH }},
         'productName': productName,
         'productDesc': productDesc,
     'productTarget': productTarget
