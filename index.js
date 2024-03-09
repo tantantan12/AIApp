@@ -1,6 +1,6 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
-    gtag('event', 'again');
+    gtag('event', 'again',{'experiment': {{ BRANCH }}});
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
