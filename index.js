@@ -1,6 +1,6 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
-    gtag('event', 'again',{'experiment': {{ BRANCH }}});
+    gtag('event', 'again',{'experiment_condition': {{ BRANCH }}});
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
@@ -21,7 +21,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   advertising copy: 
   `;
   gtag('event', 'submit', {
-        'experiment': {{ BRANCH }},
+        'experiment_condition': {{ BRANCH }},
         'productName': productName,
         'productDesc': productDesc,
     'productTarget': productTarget
