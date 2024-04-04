@@ -25,8 +25,6 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   `;
   gtag('event', 'submit', {
     'Experiment_Condition':  '{{ getenv "BRANCH" }}';
-    console.info('{{ getenv "BRANCH" }}');
-    console.info( '{{ BRANCH }}' );
   });
   fetchReply();
 
