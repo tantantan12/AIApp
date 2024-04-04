@@ -1,6 +1,6 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
-  gtag('event', 'again', {
+    gtag('event', 'again', {
     'Experiment_Condition': '{{ BRANCH }}'
       ,'term':  '{{ BRANCH }}'});
 })
@@ -22,7 +22,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   product traget market: ${productTarget}
   advertising copy: 
   `;
- gtag('event', 'submit', {
+  gtag('event', 'submit', {
     'Experiment_Condition':  '{{ BRANCH }}','term':  '{{ BRANCH }}'
   });
   fetchReply();
