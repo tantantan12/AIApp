@@ -2,7 +2,7 @@ document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
     gtag('event', 'again', {
     'Experiment_Condition': '{{ BRANCH }}'
-      ,'term':  '{{ BRANCH }}''});
+      ,'term':  '{{ BRANCH }}'});
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
