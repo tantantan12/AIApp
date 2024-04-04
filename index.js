@@ -1,8 +1,8 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
     gtag('event', 'again', {
-    'Experiment_Condition': '{{ BRANCH }}','term':  '{{ BRANCH }}''
-  });
+    'Experiment_Condition': '{{ BRANCH }}'
+      ,'term':  '{{ BRANCH }}''});
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
