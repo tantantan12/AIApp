@@ -2,7 +2,7 @@ document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
     gtag('event', 'again', {
     'Experiment_Condition': '{{ BRANCH }}'
-      ,'term':  '{{ BRANCH }}'});
+      });
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
@@ -23,7 +23,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   advertising copy: 
   `;
   gtag('event', 'submit', {
-    'Experiment_Condition':  '{{ BRANCH }}','term':  '{{ BRANCH }}'
+    'Experiment_Condition':  '{{ BRANCH }}' 
   });
   fetchReply();
 
