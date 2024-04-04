@@ -1,7 +1,8 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
+   gtag('config', 'G-43HYZ5T4C8') ;
     gtag('event', 'again', {
-    'Experiment_Condition': '{{ BRANCH }}'
+    'Experiment_Condition': '{{ getenv "BRANCH" }}'
       ,'term':  '{{ BRANCH }}'});
 })
 
