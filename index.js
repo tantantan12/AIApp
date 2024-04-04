@@ -3,7 +3,7 @@ document.getElementById("again-btn").addEventListener("click", () => {
    gtag('config', 'G-43HYZ5T4C8') ;
     gtag('event', 'again', {
     'Experiment_Condition': '{{ getenv "BRANCH" }}'
-      ,'term':  '{{ getenv "BRANCH" }}'});
+     });
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
@@ -24,7 +24,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   advertising copy: 
   `;
   gtag('event', 'submit', {
-    'Experiment_Condition':  '{{ getenv "BRANCH" }}','term':  '{{ getenv "BRANCH" }}'
+    'Experiment_Condition':  '{{ getenv "BRANCH" }}' 
   });
   fetchReply();
 
