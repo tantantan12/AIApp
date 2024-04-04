@@ -1,8 +1,9 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
     gtag('event', 'again', {
-    'Experiment_Condition': process.env.BRANCH 
+    'Experiment_Condition': '{{ getenv "BRANCH" }}'
       });
+  
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
@@ -23,7 +24,10 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   advertising copy: 
   `;
   gtag('event', 'submit', {
-    'Experiment_Condition':  process.env.BRANCH
+    'Experiment_Condition':  '{{ getenv "BRANCH" }}';
+    console.info('{{ getenv "BRANCH" }}');
+  console.info( {{ getenv "BRANCH" }} );
+console.info( {{ "BRANCH"}} );
   });
   fetchReply();
 
