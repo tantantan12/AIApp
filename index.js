@@ -1,6 +1,8 @@
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
-    gtag('event', 'again');
+    gtag('event', 'again', {
+    'Experiment_Condition':  '{{ getenv "BRANCH" }}'
+  });
 })
 
 document.getElementById("submit-btn").addEventListener("click", () => {
@@ -21,10 +23,8 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   advertising copy: 
   `;
   gtag('event', 'submit', {
-        'productName': productName,
-        'productDesc': productDesc,
-    'productTarget': productTarget
-      });
+    'Experiment_Condition':  '{{ getenv "BRANCH" }}'
+  });
   fetchReply();
 
 })
