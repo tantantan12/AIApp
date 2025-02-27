@@ -56,7 +56,7 @@ async function fetchReply(){
       }
 
       prompt += ` ${data.reply} ->`;
-      document.getElementById('ad-output').insertAdjacentText('beforeend', data.choices[0].text.trim());
+      document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim());
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
   } catch (error) {
