@@ -48,6 +48,7 @@ async function fetchReply(){
       }
 
       const data = await response.json();
+ 
       console.info("API Response:", data); // Log API response
 
       if (!data.reply) {
@@ -55,7 +56,7 @@ async function fetchReply(){
       }
 
       prompt += ` ${data.reply} ->`;
-      document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.trim());
+      document.getElementById('ad-output').insertAdjacentText('beforeend', data.choices[0].text.trim());
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
   } catch (error) {
