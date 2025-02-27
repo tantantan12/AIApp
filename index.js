@@ -1,3 +1,5 @@
+let prompt = "";  // Add this at the top of index.js
+
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
     gtag('event', 'again', {
@@ -24,7 +26,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
   advertising copy: 
   `;
   gtag('event', 'submit', {
-    'Experiment_Condition':  '{{ getenv "BRANCH" }}';
+    'Experiment_Condition':  '{{ getenv "BRANCH" }}'
   });
   fetchReply();
 
@@ -32,20 +34,32 @@ document.getElementById("submit-btn").addEventListener("click", () => {
 
 
 async function fetchReply(){
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI'     
-  
-  const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-          'content-type': 'text/plain',
-      },
-      body: prompt
-  })
-  const data = await response.json()
-  console.info(prompt);
+  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI';
 
- prompt+=` ${data.reply.choices[0].text} ->`
- document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim())
- document.getElementById('ad-input').style.display = 'none'
- document.getElementById('ad-output').style.display = 'block'
-  console.log(data)}
+  try {
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'content-type': 'text/plain' },
+          body: prompt
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.info("API Response:", data); // Log API response
+
+      if (!data.reply) {
+          throw new Error("Invalid response format");
+      }
+
+      prompt += ` ${data.reply} ->`;
+      document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.trim());
+      document.getElementById('ad-input').style.display = 'none';
+      document.getElementById('ad-output').style.display = 'block';
+  } catch (error) {
+      console.error("Fetch API Error:", error); // Log fetch errors
+      alert("An error occurred while fetching the response. Check the console for details.");
+  }
+}

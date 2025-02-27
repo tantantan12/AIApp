@@ -130,3 +130,10 @@ You can change the input label "Product Name" and the placeholder "Water Bottle"
 			<button id="submit-btn">Generate Copy</button>
 		</section> 
 ```
+## 4. How to run your website locally.
+- If you have Python installed, you can simply use
+```python
+python -m http.server 8000
+```
+Then, open <code>[index.html](http://localhost:8000/)</code> in your browser.
+- If you use VS Code, add the Live Server extension. Right-click <code>index.html</code> and select "Open with Live Server."

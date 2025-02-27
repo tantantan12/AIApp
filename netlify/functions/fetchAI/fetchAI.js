@@ -25,6 +25,7 @@ const handler = async (event) => {
             })
         }
     } catch (error) {
+        console.error("OpenAI API Error:", error);
         return { statusCode: 500, body: error.toString() }
     }
 }
