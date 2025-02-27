@@ -64,3 +64,45 @@ async function fetchReply(){
       alert("An error occurred while fetching the response. Check the console for details.");
   }
 }
+
+
+document.getElementById("search-btn").addEventListener("click", async () => {
+  const productName = document.getElementById("name").value;
+
+  if (!productName) {
+      alert("Please enter a product name before searching for competitors.");
+      return;
+  }
+
+  try {
+      document.getElementById("competitor-list").innerHTML = "Searching...";
+
+      const response = await fetchCompetitors(productName);
+      const competitors = response.competitors;
+
+      if (competitors.length === 0) {
+          document.getElementById("competitor-list").innerHTML = "<li>No competitors found.</li>";
+      } else {
+          document.getElementById("competitor-list").innerHTML = competitors.map(comp => `<li>${comp}</li>`).join("");
+      }
+  } catch (error) {
+      console.error("Competitor Search Error:", error);
+      alert("An error occurred while searching for competitors. Check the console for details.");
+  }
+});
+
+async function fetchCompetitors(productName) {
+  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+
+  const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ query: productName })
+  });
+
+  if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  return response.json();
+}

@@ -39,11 +39,17 @@
 			<label for="">Target market</label>
 			<textarea placeholder="College students who go to Southern Methodist University" id="target"></textarea>
 			<button id="submit-btn">Generate Copy</button>
+			<button id="search-btn">Search for Competitors</button>
 		</section> 
 		<section class="ad-output" id="ad-output">
 			<h4>Your Copy!</h4>
-			 
-			<button id="again-btn">Again!</button> 
+			<button id="again-btn">Again!</button>
+
+			<div id="competitor-results">
+				<h4>Top Competitors:</h4>
+				<ul id="competitor-list"></ul>
+			</div> 
+			
 		</section>
 	</main>
 	<script type="module" src="index.js"></script>
