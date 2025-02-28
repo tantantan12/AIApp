@@ -14,9 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "@langchain/anthropic": "^0.3.14",
+    "@langchain/community": "^0.3.33",
     "dotenv": "^16.4.7",
     "langchain": "^0.3.19",
-    "openai": "^3.1.0",
+    "openai": "^4.86.1",
     "serpapi": "^2.1.0"
   },
   "devDependencies": {
