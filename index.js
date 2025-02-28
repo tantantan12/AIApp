@@ -66,18 +66,33 @@ async function fetchReply(){
 }
 
 
+
+document.getElementById("search-btn").addEventListener("click", () => {
+
+  const productName = document.getElementById("name").value;
+  const productDesc = document.getElementById("desc").value;
+  const productTarget = document.getElementById("target").value;
+  prompt += `Find competitors of a ${productName} with features  ${productDesc}. The target users are ${productTarget}.
+  `;
+  fetchCompetitors();
+
+})
+
+
 document.getElementById("search-btn").addEventListener("click", async () => {
   const productName = document.getElementById("name").value;
+  const productDesc = document.getElementById("desc").value;
+  const productTarget = document.getElementById("target").value;
 
-  if (!productName) {
-      alert("Please enter a product name before searching for competitors.");
+  if (!productName || !productDesc || !productTarget) {
+      alert("Please fill in all fields before searching for competitors.");
       return;
   }
 
+  document.getElementById("competitor-list").innerHTML = "Searching...";
+  
   try {
-      document.getElementById("competitor-list").innerHTML = "Searching...";
-
-      const response = await fetchCompetitors(productName);
+      const response = await fetchCompetitors(productName, productDesc, productTarget);
       const competitors = response.competitors;
 
       if (competitors.length === 0) {
@@ -91,24 +106,21 @@ document.getElementById("search-btn").addEventListener("click", async () => {
   }
 });
 
-async function fetchCompetitors(productName) {
+async function fetchCompetitors(productName, productDesc, productTarget) {
   const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 
-  // Ensure productName is not empty
-  if (!productName) {
-      console.error("fetchCompetitors Error: productName is missing");
-      alert("Please enter a product name before searching for competitors.");
-      return;
-  }
-
-  const requestBody = JSON.stringify({ query: productName });
+  const requestBody = JSON.stringify({
+      name: productName,
+      description: productDesc,
+      target: productTarget
+  });
 
   console.log("Sending request to fetchCompetitors:", requestBody);
 
   try {
       const response = await fetch(url, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' }, // Ensure proper content type
+          headers: { 'Content-Type': 'application/json' },
           body: requestBody
       });
 
@@ -124,3 +136,4 @@ async function fetchCompetitors(productName) {
       alert("An error occurred while searching for competitors. Check the console for details.");
   }
 }
+
