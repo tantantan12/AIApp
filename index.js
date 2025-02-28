@@ -94,15 +94,33 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 async function fetchCompetitors(productName) {
   const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 
-  const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: productName })
-  });
-
-  if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+  // Ensure productName is not empty
+  if (!productName) {
+      console.error("fetchCompetitors Error: productName is missing");
+      alert("Please enter a product name before searching for competitors.");
+      return;
   }
 
-  return response.json();
+  const requestBody = JSON.stringify({ query: productName });
+
+  console.log("Sending request to fetchCompetitors:", requestBody);
+
+  try {
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }, // Ensure proper content type
+          body: requestBody
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Received response from fetchCompetitors:", data);
+      return data;
+  } catch (error) {
+      console.error("Competitor Search Error:", error);
+      alert("An error occurred while searching for competitors. Check the console for details.");
+  }
 }
