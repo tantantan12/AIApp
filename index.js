@@ -67,18 +67,6 @@ async function fetchReply(){
 
 
 
-document.getElementById("search-btn").addEventListener("click", () => {
-
-  const productName = document.getElementById("name").value;
-  const productDesc = document.getElementById("desc").value;
-  const productTarget = document.getElementById("target").value;
-  prompt += `Find competitors of a ${productName} with features  ${productDesc}. The target users are ${productTarget}.
-  `;
-  fetchCompetitors();
-
-})
-
-
 document.getElementById("search-btn").addEventListener("click", async () => {
   const productName = document.getElementById("name").value;
 
@@ -114,7 +102,7 @@ async function fetchCompetitors(productName) {
       return;
   }
 
-  const requestBody = JSON.stringify({ query: productName });
+  const requestBody = productName //JSON.stringify({ query: productName });
 
   console.log("Sending request to fetchCompetitors:", requestBody);
 
