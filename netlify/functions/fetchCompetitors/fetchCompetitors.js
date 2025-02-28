@@ -1,5 +1,7 @@
+console.error("start");
 import { SerpAPI } from 'langchain/tools';
 import dotenv from 'dotenv';
+console.error("import");
 
 dotenv.config();
 
