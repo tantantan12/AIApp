@@ -20,6 +20,8 @@ console.error("Created my Search");
 const handler = async (event) => {
     try {
         console.error("Received event:", event);
+        // Log the raw body
+        console.error("Raw event.body:", event.body);
         if (!event.body) {
             console.error("Error: event.body is undefined or empty");
             return { statusCode: 400, body: JSON.stringify({ error: "Request body is missing" }) };
@@ -35,7 +37,7 @@ const handler = async (event) => {
 
         console.error("Parsed requestBody:", requestBody);
         const query = requestBody.query;
-        
+
         if (!query) {
             return { statusCode: 400, body: JSON.stringify({ error: "Product name is required" }) };
         }
