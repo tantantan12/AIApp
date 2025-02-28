@@ -19,7 +19,21 @@ const search = new SerpAPI(serpApiKey, {
 console.error("Created my Search");
 const handler = async (event) => {
     try {
-        const requestBody = JSON.parse(event.body);
+        console.error("Received event:", event);
+        if (!event.body) {
+            console.error("Error: event.body is undefined or empty");
+            return { statusCode: 400, body: JSON.stringify({ error: "Request body is missing" }) };
+        }
+
+        let requestBody;
+        try {
+            requestBody = JSON.parse(event.body);
+        } catch (parseError) {
+            console.error("Error parsing JSON:", parseError);
+            return { statusCode: 400, body: JSON.stringify({ error: "Invalid JSON format in request body" }) };
+        }
+
+        console.error("Parsed requestBody:", requestBody);
         const query = requestBody.query;
         
         if (!query) {
