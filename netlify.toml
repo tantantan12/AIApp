@@ -4,7 +4,6 @@
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@langchain/community/tools/serpapi"]
   included_files = ["./node_modules/@langchain/**"]
-  external_node_modules = ["@langchain/community"]
+  external_node_modules = ["@langchain/community/tools/serpapi"]
   force_include_body = true
