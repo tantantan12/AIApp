@@ -1,11 +1,11 @@
 console.error("start");
-import { SerpAPI } from 'langchain/tools';
+import { SerpAPI } from "@langchain/community/tools/serpapi";
 import dotenv from 'dotenv';
 console.error("import");
 
 dotenv.config();
 
-const serpApiKey = process.env.SERPAPI_KEY;
+const serpApiKey = process.env.SERP_API_KEY;
 
 if (!serpApiKey) {
     throw new Error("Missing SERPAPI_KEY in environment variables");
