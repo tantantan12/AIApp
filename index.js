@@ -102,7 +102,7 @@ async function fetchCompetitors(productName) {
       return;
   }
 
-  const requestBody = productName //JSON.stringify({ query: productName });
+  const requestBody = JSON.stringify({ query: "water bottle" });
 
   console.log("Sending request to fetchCompetitors:", requestBody);
 
