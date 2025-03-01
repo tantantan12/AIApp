@@ -50,7 +50,8 @@ const handler = async (event) => {
 
         const query="water bottle brand"
         // Search for competitors on Google
-        const searchResults = await search.call(query + " competitors");
+        const searchResults = await search.call(query);
+        return { statusCode: 400, body: JSON.stringify({ results: searchResults }) };
 
         // Log the entire response to debug the structure
         console.error("Full search results:", JSON.stringify(searchResults, null, 2));
