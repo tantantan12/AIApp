@@ -49,7 +49,7 @@ const handler = async (event) => {
         console.error("✅ Raw Search Results:", searchResults["shopping_results"]);
 
         // 🟢 Step 3: Format search results using OpenAI
-        const formattedResponse = await openai.createCompletion({
+        const formattedResponse = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
             prompt: `Summarize these Google Shopping search results in an engaging way:\n${JSON.stringify(searchResults["shopping_results"])}\nLimit it to the top 3 options.`,
             presence_penalty: 0,
