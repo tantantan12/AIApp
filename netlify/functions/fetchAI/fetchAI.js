@@ -12,15 +12,15 @@ const handler = async (event) => {
         const response = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
             prompt: event.body,
-        presence_penalty: 0,
-        frequency_penalty: 0.3,
-        max_tokens: 100,
-        temperature: 0,
+            presence_penalty: 0,
+            frequency_penalty: 0.3,
+            max_tokens: 100,
+            temperature: 0,
         })
         return {
             statusCode: 200,
             body: JSON.stringify({
-                reply: response.choices?.[0]?.text?.trim() || "No response from OpenAI" //reply: response.choices[0].text.trim()  
+                response  //reply: response.choices[0].text.trim()  
             })
         }
         
