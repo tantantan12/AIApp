@@ -32,6 +32,42 @@ document.getElementById("submit-btn").addEventListener("click", () => {
 
 })
 
+async function fetchCompetitors(productName) {
+  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+
+  if (!productName) {
+      console.error("fetchCompetitors Error: productName is missing");
+      alert("Please enter a product name before searching.");
+      return;
+  }
+
+  console.log("Sending request to fetchCompetitors...");
+
+  try {
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: "water bottle brand" })
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("✅ FULL API RESPONSE:", data);  // Log full response
+
+      // ✅ Instead of extracting competitors, print everything
+      document.getElementById("competitor-list").innerHTML = `
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+      `;
+
+      return data;
+  } catch (error) {
+      console.error("❌ Fetch Competitors Error:", error);
+      alert("An error occurred. Check the console for details.");
+  }
+}
 
 async function fetchReply(){
   const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI';
@@ -91,46 +127,3 @@ document.getElementById("search-btn").addEventListener("click", async () => {
       alert("An error occurred while searching for competitors. Check the console for details.");
   }
 });
-
-async function fetchCompetitors(productName) {
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
-
-  // Ensure productName is not empty
-  if (!productName) {
-      console.error("fetchCompetitors Error: productName is missing");
-      alert("Please enter a product name before searching for competitors.");
-      return;
-  }
-
-  // Use a hardcoded test query for debugging
-  const requestBody = JSON.stringify({ query: "water bottle brand" });
-
-  console.log("Sending request to fetchCompetitors:", requestBody);
-
-  try {
-      const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }, // Ensure proper content type
-          body: requestBody
-      });
-
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Received response from fetchCompetitors:", data);
-
-      // ✅ Check if competitors exist before using them
-      if (!data.competitors) {
-          console.error("Unexpected API response format:", data);
-          alert("API returned unexpected data format. Check console for details.");
-          return;
-      }
-
-      return data;
-  } catch (error) {
-      console.error("Competitor Search Error:", error);
-      alert("An error occurred while searching for competitors. Check the console for details.");
-  }
-}

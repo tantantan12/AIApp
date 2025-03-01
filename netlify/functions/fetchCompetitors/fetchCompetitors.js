@@ -48,28 +48,21 @@ const handler = async (event) => {
 
 //        const query = requestBody.query || requestBody.productName;  // Support multiple key names
 
-        const query="water bottle brand"
-        // Search for competitors on Google
-        const searchResults = await search.call(query);
-        //return { statusCode: 400, body: JSON.stringify({ results: searchResults }) };
+        const query = "water bottle brand";
+        console.error("Using Query:", query);
 
-        // Log the entire response to debug the structure
-        console.error("Full search results:", JSON.stringify(searchResults, null, 2));
+        // Perform Google Search using SerpAPI
+        const searchResults = await search.invoke({ query });
 
-        // Extract organic search results
-        const organicResults = searchResults.organic_results || [];
-        
-        // Extract competitor names
-        const competitorNames = organicResults.slice(0, 5).map(result => result.title || "Unknown Competitor");
-
-        console.error("Extracted Competitors:", competitorNames);
+        // 🛑 Log the full API response
+        console.error("🛑 FULL SEARCH RESULTS:", JSON.stringify(searchResults, null, 2));
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ competitors: competitorNames })
+            body: JSON.stringify(searchResults, null, 2)  // ✅ Return full search response
         };
     } catch (error) {
-        console.error("Error fetching competitors:", error);
+        console.error("❌ Error fetching competitors:", error);
         return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
     }
 };
