@@ -79,7 +79,7 @@ const handler = async (event) => {
             })
         };
     } catch (error) {
-        console.error("❌ OpenAI API Error:", error);
+        console.error("OpenAI API Error:", error);
         return { statusCode: 500, body: JSON.stringify({ error: error.toString() }) };
     }
 };

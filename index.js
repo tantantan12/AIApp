@@ -114,7 +114,8 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
 
       // Insert the formatted list into ad-output
-      document.getElementById('ad-output').innerHTML = `<ul>${formattedText}</ul>`;
+      document.getElementById('ad-output').insertAdjacentHTML('beforeend', `<ul>${formattedText}</ul>`);
+
 
       //document.getElementById('ad-output').insertAdjacentText('beforeend',JSON.stringify(data.results, null, 2));
       document.getElementById('ad-input').style.display = 'none';
