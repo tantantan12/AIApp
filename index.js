@@ -55,8 +55,9 @@ async function fetchReply(){
           throw new Error("Invalid response format");
       }
 
-      prompt += ` ${data.reply} ->`;
-      document.getElementById('ad-output').insertAdjacentText('beforeend', JSON.stringify(data.reply.choices[0].text, null, 2));//.reply.choices[0].text.trim()
+      //prompt += ` ${data.reply} ->`;
+      const cleanText = JSON.stringify(data.reply.choices[0].text, null, 2).trim().replace(/^"(.*)"$/, '$1').replace(/\\"/g, '"'); // Convert \" to normal "
+      document.getElementById('ad-output').insertAdjacentText('beforeend', cleanText);//.reply.choices[0].text.trim()
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
   } catch (error) {
@@ -76,7 +77,7 @@ document.getElementById("search-btn").addEventListener("click", async () => {
       return;
   }
 
-  document.getElementById("product-results").innerHTML = "Searching...";
+  //document.getElementById("product-results").innerHTML = "Searching...";
 
   try {
       const response = await fetchCompetitors(productName, productDesc, targetMarket);
@@ -109,7 +110,13 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
-      document.getElementById('ad-output').insertAdjacentText('beforeend',JSON.stringify(data.results, null, 2));
+      // Extract and format bullet points
+      const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
+
+      // Insert the formatted list into ad-output
+      document.getElementById('ad-output').innerHTML = `<ul>${formattedText}</ul>`;
+
+      //document.getElementById('ad-output').insertAdjacentText('beforeend',JSON.stringify(data.results, null, 2));
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
       console.log("FULL PRODUCT RESPONSE:", data);
