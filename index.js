@@ -80,12 +80,19 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 
   try {
       const response = await fetchCompetitors(productName, productDesc, targetMarket);
-      document.getElementById("product-results").innerHTML = response.results;
+//      document.getElementById("product-results").innerHTML = response.results;
+      document.getElementById('ad-output').insertAdjacentText('beforeend',response);
+      document.getElementById('ad-input').style.display = 'none';
+      document.getElementById('ad-output').style.display = 'block';
   } catch (error) {
       console.error("Error Fetching Products:", error);
       alert("An error occurred while searching for products.");
   }
 });
+
+
+
+
 
 async function fetchCompetitors(productName, productDesc, targetMarket ) {
   const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
@@ -105,10 +112,10 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
-      console.log("✅ FULL PRODUCT RESPONSE:", data);
+      console.log("FULL PRODUCT RESPONSE:", data);
       return data;
   } catch (error) {
-      console.error("❌ Fetch Products Error:", error);
+      console.error("Fetch Products Error:", error);
       throw error;
   }
 }
