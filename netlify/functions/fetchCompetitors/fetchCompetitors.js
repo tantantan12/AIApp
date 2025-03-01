@@ -9,6 +9,7 @@ const openai = new OpenAI({
 
 const SERPAPI_KEY = process.env.SERP_API_KEY;
 
+
 const handler = async (event) => {
     try {
         if (!event.body) {
@@ -27,7 +28,7 @@ const handler = async (event) => {
 
         // 🟢 Step 1: Generate a refined search query using OpenAI
         const refineSearch = await openai.completions.create({
-            model: 'gpt-3.5-turbo-instruct',
+            model: "gpt-3.5-turbo-instruct",
             prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
             presence_penalty: 0,
             frequency_penalty: 0.3,
@@ -37,7 +38,7 @@ const handler = async (event) => {
 
         const refinedQuery = refineSearch.choices[0].text.trim();
 
-        console.error("Refined Search Query:", refinedQuery);
+        console.error("✅ Refined Search Query:", refinedQuery);
 
         // 🟢 Step 2: Perform Google Shopping Search
         const searchResults = await getJson({
@@ -48,10 +49,18 @@ const handler = async (event) => {
 
         console.error("✅ Raw Search Results:", searchResults["shopping_results"]);
 
+        // ✅ Limit results to prevent exceeding OpenAI's 4097 token limit
+        const topResults = searchResults["shopping_results"]?.slice(0, 5).map(item => ({
+            title: item.title,
+            link: item.link,
+            price: item.price,
+            description: truncateText(item.description || "", 200) // Truncate descriptions
+        })) || [];
+
         // 🟢 Step 3: Format search results using OpenAI
         const formattedResponse = await openai.completions.create({
-            model: 'gpt-3.5-turbo-instruct',
-            prompt: `Summarize these Google Shopping search results in an engaging way:\n${JSON.stringify(searchResults["shopping_results"])}\nLimit it to the top 3 options.`,
+            model: "gpt-3.5-turbo-instruct",
+            prompt: `Summarize these Google Shopping search results in an engaging way:\n${JSON.stringify(topResults)}\nLimit it to the top 3 options.`,
             presence_penalty: 0,
             frequency_penalty: 0.3,
             max_tokens: 200,
@@ -63,12 +72,12 @@ const handler = async (event) => {
         return {
             statusCode: 200,
             body: JSON.stringify({
-                results: formattedResponse.data.choices[0].text
+                results: formattedResponse.choices[0].text
             })
         };
     } catch (error) {
-        console.error("OpenAI API Error:", error);
-        return { statusCode: 500, body: error.toString() };
+        console.error("❌ OpenAI API Error:", error);
+        return { statusCode: 500, body: JSON.stringify({ error: error.toString() }) };
     }
 };
 
