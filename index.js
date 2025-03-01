@@ -81,7 +81,7 @@ document.getElementById("search-btn").addEventListener("click", async () => {
   document.getElementById("product-results").innerHTML = "Searching...";
 
   try {
-      const response = await fetchProducts(productName, productDesc, targetMarket);
+      const response = await fetchCompetitors(productName, productDesc, targetMarket);
       document.getElementById("product-results").innerHTML = response.results;
   } catch (error) {
       console.error("Error Fetching Products:", error);
