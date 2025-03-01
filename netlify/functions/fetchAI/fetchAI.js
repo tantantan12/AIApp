@@ -20,10 +20,10 @@ const handler = async (event) => {
         return {
             statusCode: 200,
             body: JSON.stringify({
-                reply: response.data                
-
+                reply: response.choices[0].text.trim()  //
             })
         }
+        
     } catch (error) {
         return { statusCode: 500, body: error.toString() }
     }

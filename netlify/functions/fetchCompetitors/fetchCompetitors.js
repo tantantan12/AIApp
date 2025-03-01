@@ -9,6 +9,9 @@ const openai = new OpenAI({
 
 const SERPAPI_KEY = process.env.SERP_API_KEY;
 
+function truncateText(text, maxLength = 200) {
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+}
 
 const handler = async (event) => {
     try {
