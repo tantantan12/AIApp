@@ -56,7 +56,7 @@ async function fetchReply(){
       }
 
       prompt += ` ${data.reply} ->`;
-      document.getElementById('ad-output').insertAdjacentText('beforeend', JSON.stringify(data, null, 2));//.reply.choices[0].text.trim()
+      document.getElementById('ad-output').insertAdjacentText('beforeend', JSON.stringify(data.reply.choices[0].text, null, 2));//.reply.choices[0].text.trim()
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
   } catch (error) {
@@ -109,7 +109,7 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
-      document.getElementById('ad-output').insertAdjacentText('beforeend',JSON.stringify(data, null, 2));
+      document.getElementById('ad-output').insertAdjacentText('beforeend',JSON.stringify(data.results, null, 2));
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
       console.log("FULL PRODUCT RESPONSE:", data);
