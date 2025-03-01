@@ -41,7 +41,7 @@ const handler = async (event) => {
 
         const refinedQuery = refineSearch.choices[0].text.trim();
 
-        console.error("✅ Refined Search Query:", refinedQuery);
+        console.error("Refined Search Query:", refinedQuery);
 
         // 🟢 Step 2: Perform Google Shopping Search
         const searchResults = await getJson({
@@ -50,27 +50,27 @@ const handler = async (event) => {
             q: refinedQuery
         });
 
-        console.error("✅ Raw Search Results:", searchResults["shopping_results"]);
+        console.error("Raw Search Results:", searchResults["shopping_results"]);
 
-        // ✅ Limit results to prevent exceeding OpenAI's 4097 token limit
+        //  Limit results to prevent exceeding OpenAI's 4097 token limit
         const topResults = searchResults["shopping_results"]?.slice(0, 5).map(item => ({
             title: item.title,
-            link: item.link,
+//            link: item.link,
             price: item.price,
             description: truncateText(item.description || "", 200) // Truncate descriptions
         })) || [];
 
-        // 🟢 Step 3: Format search results using OpenAI
+        // Step 3: Format search results using OpenAI
         const formattedResponse = await openai.completions.create({
             model: "gpt-3.5-turbo-instruct",
-            prompt: `Summarize these Google Shopping search results in an engaging way:\n${JSON.stringify(topResults)}\nLimit it to the top 3 options.`,
+            prompt: `Summarize these Google Shopping search results by listing the title of the top three products in bullet points:\n${JSON.stringify(topResults)}\nLimit it to the top 3 options.`,
             presence_penalty: 0,
             frequency_penalty: 0.3,
             max_tokens: 200,
             temperature: 0
         });
 
-        console.error("✅ Reformatted Response:", formattedResponse.choices[0].text);
+        console.error("Reformatted Response:", formattedResponse.choices[0].text);
 
         return {
             statusCode: 200,

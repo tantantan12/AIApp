@@ -20,7 +20,7 @@ const handler = async (event) => {
         return {
             statusCode: 200,
             body: JSON.stringify({
-                reply: response.choices[0].text.trim()  //
+                reply: response.choices?.[0]?.text?.trim() || "No response from OpenAI" //reply: response.choices[0].text.trim()  
             })
         }
         
