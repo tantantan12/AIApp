@@ -7,7 +7,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
 
-const SERPAPI_KEY = process.env.SERPAPI_KEY;
+const SERPAPI_KEY = process.env.SERP_API_KEY;
 
 const handler = async (event) => {
     try {
