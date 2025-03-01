@@ -1,16 +1,15 @@
-const { Configuration, OpenAIApi } = require('openai');
+import { Configuration, OpenAIApi } from 'openai'
 
-const OpenAI = require("openai");
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+})
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
-
+const openai = new OpenAIApi(configuration)
 
 const handler = async (event) => {
     
     try {
-        const response = await openai.completions.create({
+        const response = await openai.createCompletion({
             model: 'gpt-3.5-turbo-instruct',
             prompt: event.body,
         presence_penalty: 0,
@@ -26,7 +25,6 @@ const handler = async (event) => {
             })
         }
     } catch (error) {
-        console.error("OpenAI API Error:", error);
         return { statusCode: 500, body: error.toString() }
     }
 }

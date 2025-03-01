@@ -33,7 +33,6 @@ document.getElementById("submit-btn").addEventListener("click", () => {
 })
 
 
-
 async function fetchReply(){
   const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI';
 
@@ -65,7 +64,6 @@ async function fetchReply(){
       alert("An error occurred while fetching the response. Check the console for details.");
   }
 }
-
 
 
 document.getElementById("search-btn").addEventListener("click", async () => {
