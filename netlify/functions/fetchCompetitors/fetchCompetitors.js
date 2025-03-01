@@ -16,7 +16,7 @@ const search = new SerpAPI(serpApiKey, {
     hl: "en",
     gl: "us"
 });
-console.error("Created my Search");
+
 
 
 const handler = async (event) => {
@@ -51,7 +51,7 @@ const handler = async (event) => {
         const query="water bottle brand"
         // Search for competitors on Google
         const searchResults = await search.call(query);
-        return { statusCode: 400, body: JSON.stringify({ results: searchResults }) };
+        //return { statusCode: 400, body: JSON.stringify({ results: searchResults }) };
 
         // Log the entire response to debug the structure
         console.error("Full search results:", JSON.stringify(searchResults, null, 2));
