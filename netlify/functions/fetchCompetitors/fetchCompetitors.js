@@ -1,5 +1,5 @@
-import { Configuration, OpenAIApi } from 'openai';
-import { getJson } from "serpapi";
+const { Configuration, OpenAIApi } = require('openai');
+const { getJson } = require("serpapi");
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY
