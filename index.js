@@ -56,7 +56,7 @@ async function fetchReply(){
       }
 
       prompt += ` ${data.reply} ->`;
-      document.getElementById('ad-output').insertAdjacentText('beforeend', data.reply.choices[0].text.trim());
+      document.getElementById('ad-output').insertAdjacentText('beforeend', data);//.reply.choices[0].text.trim()
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
   } catch (error) {
@@ -81,9 +81,6 @@ document.getElementById("search-btn").addEventListener("click", async () => {
   try {
       const response = await fetchCompetitors(productName, productDesc, targetMarket);
 //      document.getElementById("product-results").innerHTML = response.results;
-      document.getElementById('ad-output').insertAdjacentText('beforeend',response);
-      document.getElementById('ad-input').style.display = 'none';
-      document.getElementById('ad-output').style.display = 'block';
   } catch (error) {
       console.error("Error Fetching Products:", error);
       alert("An error occurred while searching for products.");
@@ -112,6 +109,9 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
+      document.getElementById('ad-output').insertAdjacentText('beforeend',data);
+      document.getElementById('ad-input').style.display = 'none';
+      document.getElementById('ad-output').style.display = 'block';
       console.log("FULL PRODUCT RESPONSE:", data);
       return data;
   } catch (error) {
