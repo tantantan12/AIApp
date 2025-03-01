@@ -102,7 +102,8 @@ async function fetchCompetitors(productName) {
       return;
   }
 
-  const requestBody = JSON.stringify({ query: "water bottle" });
+  // Use a hardcoded test query for debugging
+  const requestBody = JSON.stringify({ query: "water bottle brand" });
 
   console.log("Sending request to fetchCompetitors:", requestBody);
 
@@ -119,6 +120,14 @@ async function fetchCompetitors(productName) {
 
       const data = await response.json();
       console.log("Received response from fetchCompetitors:", data);
+
+      // ✅ Check if competitors exist before using them
+      if (!data.competitors) {
+          console.error("Unexpected API response format:", data);
+          alert("API returned unexpected data format. Check console for details.");
+          return;
+      }
+
       return data;
   } catch (error) {
       console.error("Competitor Search Error:", error);
