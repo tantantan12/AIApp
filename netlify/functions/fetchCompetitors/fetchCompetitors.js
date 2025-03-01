@@ -28,16 +28,25 @@ const handler = async (event) => {
         }
 
         let requestBody;
-        try {
+        
+
+
+
+        // Handle both cases: when body is stringified vs. when event is already an object
+        if (event.body) {
             requestBody = JSON.parse(event.body);
-        } catch (parseError) {
-            console.error("Error parsing JSON:", parseError);
-            return { statusCode: 400, body: JSON.stringify({ error: "Invalid JSON format in request body" }) };
+        } else if (typeof event === "object") {
+            requestBody = event;  // In local testing, Netlify might send an object directly
+        } else {
+            console.error("Unexpected event format:", event);
+            return { statusCode: 400, body: JSON.stringify({ error: "Invalid request format" }) };
         }
 
         console.error("Parsed requestBody:", requestBody);
-        const query = requestBody.query;
 
+        const query = requestBody.query || requestBody.productName;  // Support multiple key names
+
+        
         if (!query) {
             return { statusCode: 400, body: JSON.stringify({ error: "Product name is required" }) };
         }
