@@ -32,42 +32,7 @@ document.getElementById("submit-btn").addEventListener("click", () => {
 
 })
 
-async function fetchCompetitors(productName) {
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 
-  if (!productName) {
-      console.error("fetchCompetitors Error: productName is missing");
-      alert("Please enter a product name before searching.");
-      return;
-  }
-
-  console.log("Sending request to fetchCompetitors...");
-
-  try {
-      const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: "water bottle brand" })
-      });
-
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("✅ FULL API RESPONSE:", data);  // Log full response
-
-      // ✅ Instead of extracting competitors, print everything
-      document.getElementById("competitor-list").innerHTML = `
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-      `;
-
-      return data;
-  } catch (error) {
-      console.error("❌ Fetch Competitors Error:", error);
-      alert("An error occurred. Check the console for details.");
-  }
-}
 
 async function fetchReply(){
   const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI';
@@ -105,25 +70,47 @@ async function fetchReply(){
 
 document.getElementById("search-btn").addEventListener("click", async () => {
   const productName = document.getElementById("name").value;
+  const productDesc = document.getElementById("desc").value;
+  const targetMarket = document.getElementById("target").value;
 
-  if (!productName) {
-      alert("Please enter a product name before searching for competitors.");
+  if (!productName || !productDesc || !targetMarket) {
+      alert("Please fill in all fields.");
       return;
   }
 
+  document.getElementById("product-results").innerHTML = "Searching...";
+
   try {
-      document.getElementById("competitor-list").innerHTML = "Searching...";
-
-      const response = await fetchCompetitors(productName);
-      const competitors = response.competitors;
-
-      if (competitors.length === 0) {
-          document.getElementById("competitor-list").innerHTML = "<li>No competitors found.</li>";
-      } else {
-          document.getElementById("competitor-list").innerHTML = competitors.map(comp => `<li>${comp}</li>`).join("");
-      }
+      const response = await fetchProducts(productName, productDesc, targetMarket);
+      document.getElementById("product-results").innerHTML = response.results;
   } catch (error) {
-      console.error("Competitor Search Error:", error);
-      alert("An error occurred while searching for competitors. Check the console for details.");
+      console.error("Error Fetching Products:", error);
+      alert("An error occurred while searching for products.");
   }
 });
+
+async function fetchCompetitors(productName, productDesc, targetMarket ) {
+  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+
+  
+  console.log("Sending request to fetchProducts:", { productName, productDesc, targetMarket });
+
+  try {
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productName, productDesc, targetMarket })
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("✅ FULL PRODUCT RESPONSE:", data);
+      return data;
+  } catch (error) {
+      console.error("❌ Fetch Products Error:", error);
+      throw error;
+  }
+}

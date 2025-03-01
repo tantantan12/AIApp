@@ -1,68 +1,73 @@
-console.error("start");
-import { SerpAPI } from "@langchain/community/tools/serpapi";
-import dotenv from 'dotenv';
-console.error("import");
+import { Configuration, OpenAIApi } from 'openai';
+import { getJson } from "serpapi";
 
-dotenv.config();
-
-const serpApiKey = process.env.SERP_API_KEY;
-
-if (!serpApiKey) {
-    throw new Error("Missing SERPAPI_KEY in environment variables");
-}
-
-const search = new SerpAPI(serpApiKey, {
-    engine: "google",
-    hl: "en",
-    gl: "us"
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY
 });
 
-
+const openai = new OpenAIApi(configuration);
+const SERPAPI_KEY = process.env.SERPAPI_KEY;
 
 const handler = async (event) => {
     try {
-        console.error("Received event:", event);
-        // Log the raw body
-        console.error("Raw event.body:", event.body);
         if (!event.body) {
             console.error("Error: event.body is undefined or empty");
             return { statusCode: 400, body: JSON.stringify({ error: "Request body is missing" }) };
         }
 
-        let requestBody;
-        
-        // Handle both cases: when body is stringified vs. when event is already an object
-//        if (event.body) {
-//            requestBody = JSON.parse(event.body);
-//        } else if (typeof event === "object") {
-//            requestBody = event;  // In local testing, Netlify might send an object directly
-//        } else {
-//            console.error("Unexpected event format:", event);
- //           return { statusCode: 400, body: JSON.stringify({ error: "Invalid request format" }) };
-//        }
+        const requestBody = JSON.parse(event.body);
+        const { productName, productDesc, targetMarket } = requestBody;
 
-//        console.error("Parsed requestBody:", requestBody);
+        if (!productName || !productDesc || !targetMarket) {
+            return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
+        }
 
-//        const query = requestBody.query || requestBody.productName;  // Support multiple key names
+        console.error("Processing Product Search for:", productName, productDesc, targetMarket);
 
-        const query = "water bottle brand";
-        console.error("Using Query:", query);
+        // 🟢 Step 1: Generate a refined search query using OpenAI
+        const refineSearch = await openai.createCompletion({
+            model: 'gpt-3.5-turbo-instruct',
+            prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
+            presence_penalty: 0,
+            frequency_penalty: 0.3,
+            max_tokens: 50,
+            temperature: 0
+        });
 
-        // Perform Google Search using SerpAPI
-        const searchResults = await search.invoke({ q: query });
+        const refinedQuery = refineSearch.data.choices[0].text.trim();
+        console.error("✅ Refined Search Query:", refinedQuery);
 
+        // 🟢 Step 2: Perform Google Shopping Search
+        const searchResults = await getJson({
+            engine: "google_shopping",
+            api_key: SERPAPI_KEY,
+            q: refinedQuery
+        });
 
-        // 🛑 Log the full API response
-        console.error("🛑 FULL SEARCH RESULTS:", JSON.stringify(searchResults, null, 2));
+        console.error("✅ Raw Search Results:", searchResults["shopping_results"]);
+
+        // 🟢 Step 3: Format search results using OpenAI
+        const formattedResponse = await openai.createCompletion({
+            model: 'gpt-3.5-turbo-instruct',
+            prompt: `Summarize these Google Shopping search results in an engaging way:\n${JSON.stringify(searchResults["shopping_results"])}\nLimit it to the top 3 options.`,
+            presence_penalty: 0,
+            frequency_penalty: 0.3,
+            max_tokens: 200,
+            temperature: 0
+        });
+
+        console.error("✅ Reformatted Response:", formattedResponse.data.choices[0].text);
 
         return {
             statusCode: 200,
-            body: JSON.stringify(searchResults, null, 2)  // ✅ Return full search response
+            body: JSON.stringify({
+                results: formattedResponse.data.choices[0].text
+            })
         };
     } catch (error) {
-        console.error("❌ Error fetching competitors:", error);
-        return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+        console.error("OpenAI API Error:", error);
+        return { statusCode: 500, body: error.toString() };
     }
 };
 
-export { handler };
+module.exports = { handler };
