@@ -35,8 +35,9 @@ const handler = async (event) => {
             temperature: 0
         });
 
-        const refinedQuery = refineSearch.data.choices[0].text.trim();
-        console.error("✅ Refined Search Query:", refinedQuery);
+        const refinedQuery = refineSearch.choices[0].text.trim();
+
+        console.error("Refined Search Query:", refinedQuery);
 
         // 🟢 Step 2: Perform Google Shopping Search
         const searchResults = await getJson({
@@ -57,7 +58,7 @@ const handler = async (event) => {
             temperature: 0
         });
 
-        console.error("✅ Reformatted Response:", formattedResponse.data.choices[0].text);
+        console.error("✅ Reformatted Response:", formattedResponse.choices[0].text);
 
         return {
             statusCode: 200,
