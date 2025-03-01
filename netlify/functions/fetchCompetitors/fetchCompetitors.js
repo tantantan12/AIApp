@@ -26,7 +26,7 @@ const handler = async (event) => {
         console.error("Processing Product Search for:", productName, productDesc, targetMarket);
 
         // 🟢 Step 1: Generate a refined search query using OpenAI
-        const refineSearch = await openai.chat.completions.create({
+        const refineSearch = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
             prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
             presence_penalty: 0,

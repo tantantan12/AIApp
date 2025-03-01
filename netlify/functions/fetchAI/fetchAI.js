@@ -10,7 +10,7 @@ const openai = new OpenAI({
 const handler = async (event) => {
     
     try {
-        const response = await openai.createCompletion({
+        const response = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
             prompt: event.body,
         presence_penalty: 0,
