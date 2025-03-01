@@ -31,9 +31,6 @@ const handler = async (event) => {
 
         let requestBody;
         
-
-
-
         // Handle both cases: when body is stringified vs. when event is already an object
 //        if (event.body) {
 //            requestBody = JSON.parse(event.body);
@@ -52,7 +49,8 @@ const handler = async (event) => {
         console.error("Using Query:", query);
 
         // Perform Google Search using SerpAPI
-        const searchResults = await search.invoke({ query });
+        const searchResults = await search.invoke({ q: query });
+
 
         // 🛑 Log the full API response
         console.error("🛑 FULL SEARCH RESULTS:", JSON.stringify(searchResults, null, 2));
