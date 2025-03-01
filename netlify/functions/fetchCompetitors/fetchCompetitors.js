@@ -50,29 +50,27 @@ const handler = async (event) => {
 
         const query="water bottle brand"
         // Search for competitors on Google
-        console.error("Using Query:", query);
+        const searchResults = await search.call(query);
+        return { statusCode: 400, body: JSON.stringify({ results: searchResults }) };
 
-        // Perform Google Search using SerpAPI
-        const searchResults = await search.invoke({ query });
-
-        // Log the entire response
+        // Log the entire response to debug the structure
         console.error("Full search results:", JSON.stringify(searchResults, null, 2));
 
-        // Extract organic search results safely
-        const organicResults = searchResults?.organic_results || [];
-
-        // Extract competitor names (limit to 5)
+        // Extract organic search results
+        const organicResults = searchResults.organic_results || [];
+        
+        // Extract competitor names
         const competitorNames = organicResults.slice(0, 5).map(result => result.title || "Unknown Competitor");
 
         console.error("Extracted Competitors:", competitorNames);
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ competitors: competitorNames })  // ✅ Always return `competitors`
+            body: JSON.stringify({ competitors: competitorNames })
         };
     } catch (error) {
         console.error("Error fetching competitors:", error);
-        return { statusCode: 500, body: JSON.stringify({ error: error.message, competitors: [] }) };  // ✅ Always return an array
+        return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
     }
 };
 
