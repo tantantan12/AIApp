@@ -17,6 +17,8 @@ const search = new SerpAPI(serpApiKey, {
     gl: "us"
 });
 console.error("Created my Search");
+
+
 const handler = async (event) => {
     try {
         console.error("Received event:", event);
@@ -47,16 +49,19 @@ const handler = async (event) => {
 //        const query = requestBody.query || requestBody.productName;  // Support multiple key names
 
         const query="water bottle brand"
-        if (!query) {
-            return { statusCode: 400, body: JSON.stringify({ error: "Product name is required" }) };
-        }
-
         // Search for competitors on Google
         const searchResults = await search.call(query + " competitors");
+
+        // Log the entire response to debug the structure
+        console.error("Full search results:", JSON.stringify(searchResults, null, 2));
+
+        // Extract organic search results
         const organicResults = searchResults.organic_results || [];
         
-        // Extract relevant competitor names
+        // Extract competitor names
         const competitorNames = organicResults.slice(0, 5).map(result => result.title || "Unknown Competitor");
+
+        console.error("Extracted Competitors:", competitorNames);
 
         return {
             statusCode: 200,
