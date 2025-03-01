@@ -1,11 +1,10 @@
 const { Configuration, OpenAIApi } = require('openai');
 const { getJson } = require("serpapi");
 
-const configuration = new Configuration({
+const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
 
-const openai = new OpenAIApi(configuration);
 const SERPAPI_KEY = process.env.SERPAPI_KEY;
 
 const handler = async (event) => {
