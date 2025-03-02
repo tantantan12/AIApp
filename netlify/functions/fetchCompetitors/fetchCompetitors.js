@@ -29,7 +29,7 @@ const handler = async (event) => {
 
         console.error("Processing Product Search for:", productName, productDesc, targetMarket);
 
-        // 🟢 Step 1: Generate a refined search query using OpenAI
+        //  Step 1: Generate a refined search query using OpenAI
         const refineSearch = await openai.completions.create({
             model: "gpt-3.5-turbo-instruct",
             prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
@@ -43,7 +43,7 @@ const handler = async (event) => {
 
         console.error("Refined Search Query:", refinedQuery);
 
-        // 🟢 Step 2: Perform Google Shopping Search
+        //  Step 2: Perform Google Shopping Search
         const searchResults = await getJson({
             engine: "google_shopping",
             api_key: SERPAPI_KEY,
