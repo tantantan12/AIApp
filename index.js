@@ -93,10 +93,7 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 
 
 async function fetchCompetitors(productName, productDesc, targetMarket ) {
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
-
-  
-  console.log("Sending request to fetchProducts:", { productName, productDesc, targetMarket });
+  const url = 'https://janetan--itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 
   try {
       const response = await fetch(url, {
