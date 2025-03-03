@@ -8,58 +8,46 @@ document.getElementById("again-btn").addEventListener("click", () => {
   
 })
 
-document.getElementById("submit-btn").addEventListener("click", () => {
+document.getElementById("advertising-btn").addEventListener("click", async() => {
 
   const productName = document.getElementById("name").value;
   const productDesc = document.getElementById("desc").value;
   const productTarget = document.getElementById("target").value;
-  prompt += `Use a product name, a product description and a target market to create advertising copy for a product.
-  ###
-  product name: EcoPure Hydration Bottle
-  product description: A sustainable, vacuum-insulated water bottle that keeps drinks cold for 48 hours and hot for 24 hours. 
-  product target market: environmentally conscious consumers
-  advertising copy: "Stay refreshed and make a difference with the EcoPure Hydration Bottle – the last water bottle you'll ever need. Embrace the power of sustainability with our innovative design, crafted for the eco-warrior in all of us. Whether you're climbing mountains or navigating the urban jungle, keep your drinks ice-cold or steaming hot, all day long. Join the EcoPure movement and quench your thirst for change. #DrinkSustainably #EcoPureAdventure
-  ###
-  product name: ${productName}
-  product description: ${productDesc}
-  product traget market: ${productTarget}
-  advertising copy: 
-  `;
-  gtag('event', 'submit', {
-    'Experiment_Condition':  '{{ getenv "BRANCH" }}'
-  });
-  fetchReply();
-
+  
+  try {
+    const response = await fetchReply(productName, productDesc, productTarget);
+    // Insert the formatted list into ad-output
+    document.getElementById('ad-output').insertAdjacentText('beforeend', response);
+    document.getElementById('ad-input').style.display = 'none';
+    document.getElementById('ad-output').style.display = 'block';
+    console.log("FULL PRODUCT RESPONSE:", response);
+} catch (error) {
+    console.error("Error Fetching Products:", error);
+    alert("An error occurred while searching for products.");
+}
 })
 
 
-async function fetchReply(){
+
+async function fetchReply(productName, productDesc, targetMarket){
   const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI';
 
   try {
       const response = await fetch(url, {
           method: 'POST',
-          headers: { 'content-type': 'text/plain' },
-          body: prompt
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ productName, productDesc, targetMarket })
       });
 
       if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
       const data = await response.json();
- 
       console.info("API Response:", data); // Log API response
-
-      if (!data.reply) {
-          throw new Error("Invalid response format");
-      }
-
-      //prompt += ` ${data.reply} ->`;
-      const cleanText = JSON.stringify(data.reply.choices[0].text, null, 2).trim().replace(/^"(.*)"$/, '$1').replace(/\\"/g, '"'); // Convert \" to normal "
-      document.getElementById('ad-output').insertAdjacentText('beforeend', cleanText);//.reply.choices[0].text.trim()
-      document.getElementById('ad-input').style.display = 'none';
-      document.getElementById('ad-output').style.display = 'block';
+      const cleanText = data.reply.choices[0].text.trim();
+      return cleanText;
+ 
+      
   } catch (error) {
       console.error("Fetch API Error:", error); // Log fetch errors
       alert("An error occurred while fetching the response. Check the console for details.");
@@ -67,7 +55,7 @@ async function fetchReply(){
 }
 
 
-document.getElementById("search-btn").addEventListener("click", async () => {
+document.getElementById("competitor-btn").addEventListener("click", async () => {
   const productName = document.getElementById("name").value;
   const productDesc = document.getElementById("desc").value;
   const targetMarket = document.getElementById("target").value;
@@ -81,7 +69,11 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 
   try {
       const response = await fetchCompetitors(productName, productDesc, targetMarket);
-//      document.getElementById("product-results").innerHTML = response.results;
+      // Insert the formatted list into ad-output
+      document.getElementById('ad-output').insertAdjacentHTML('beforeend', `<ul>${response}</ul>`);
+      document.getElementById('ad-input').style.display = 'none';
+      document.getElementById('ad-output').style.display = 'block';
+      console.log("FULL PRODUCT RESPONSE:", response);
   } catch (error) {
       console.error("Error Fetching Products:", error);
       alert("An error occurred while searching for products.");
@@ -93,7 +85,7 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 
 
 async function fetchCompetitors(productName, productDesc, targetMarket ) {
-  const url = 'https://janetan--itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 
   try {
       const response = await fetch(url, {
@@ -109,16 +101,7 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       const data = await response.json();
       // Extract and format bullet points
       const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
-
-      // Insert the formatted list into ad-output
-      document.getElementById('ad-output').insertAdjacentHTML('beforeend', `<ul>${formattedText}</ul>`);
-
-
-      //document.getElementById('ad-output').insertAdjacentText('beforeend',JSON.stringify(data.results, null, 2));
-      document.getElementById('ad-input').style.display = 'none';
-      document.getElementById('ad-output').style.display = 'block';
-      console.log("FULL PRODUCT RESPONSE:", data);
-      return data;
+      return formattedText;
   } catch (error) {
       console.error("Fetch Products Error:", error);
       throw error;
