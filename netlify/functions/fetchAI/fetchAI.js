@@ -18,7 +18,7 @@ const handler = async (event) => {
         }
 
         const requestBody = JSON.parse(event.body);
-        const { productName, productDesc, targetMarket } = requestBody;
+        const { productName, productDesc, productTarget } = requestBody;
 
         if (!productName || !productDesc || !targetMarket) {
             return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
