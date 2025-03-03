@@ -11,16 +11,11 @@ const openai = new OpenAI({
   
 const handler = async (event) => {
     
-    try {
-        if (!event.body) {
-            console.error("Error: event.body is undefined or empty");
-            return { statusCode: 400, body: JSON.stringify({ error: "Request body is missing" }) };
-        }
-
+    try { 
         const requestBody = JSON.parse(event.body);
-        const { productName, productDesc, productTarget } = requestBody;
+        const { productName, productDesc, targetMarket } = requestBody;
 
-        if (!productName || !productDesc || !productTarget) {
+        if (!productName || !productDesc || !targetMarket) {
             return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
         }
 
@@ -33,7 +28,7 @@ const handler = async (event) => {
             ###
             product name: ${productName}
             product description: ${productDesc}
-            product traget market: ${productTarget}
+            product traget market: ${targetMarket}
             advertising copy: 
             `;
 
