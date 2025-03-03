@@ -39,9 +39,6 @@ async function fetchReply(productName, productDesc, targetMarket){
           body: JSON.stringify({ productName, productDesc, targetMarket })
       });
 
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
       const data = await response.json();
       console.info("API Response:", data); // Log API response
       const cleanText = data.reply.choices[0].text.trim();
