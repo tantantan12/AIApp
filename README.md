@@ -230,8 +230,10 @@ You can visit your branch through https://janetan--itom6219.netlify.app/. If thi
 
  
 <img src="pics/week1-pr2.png" alt="Description" width="60%">
+
 **Step 3** : After creating a pull request, comparing and reviewing will be done, before you can confirm the "Merge pull request" to merge commits of this branch to main.
 
  
 <img src="pics/week1-pr3.png" alt="Description" width="50%">
+
 **Step 4** : Make sure to change the URLs back by removing your branch name and hyphens.
