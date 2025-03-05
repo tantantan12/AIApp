@@ -13,14 +13,22 @@ Click the "Branch" link.
 <img src="pics/branch1.png"  width="80%" height="30%">
 
 You can generate a branch and name it with your SMU ID. For me, my SMU ID is janetan, and I can create my branch "janetan" that sources from the main branch. 
+
 <img src="pics/branch_janetan.png"  width="40%" height="30%">
 
-If my group URL is https://6325-group2.netlify.app/, I will be able to visit my own version of the application via this link: https://janetan--6325-group2.netlify.app/ (This link does not open because it is hypothetical!)
+If my group URL is https://121-group2.netlify.app/, I will be able to visit my own version of the application via this link: https://janetan--121-group2.netlify.app/ (This link does not open because it is hypothetical!)
 
 It is basically the team link with your SMU ID and two hyphens at the beginning. 
-To make your application work, you will further need to change index.js in your own branch by adjusting the URL:
+To make your application work, you will further need to change index.js in your own branch by adjusting the URLs:
 
-<img src="pics/branch_janetan2.png"  width="80%" height="30%">
+```js
+
+async function fetchReply(){
+  const url = 'https://janetan--itom6219.netlify.app/.netlify/functions/fetchAI';
+
+async function fetchCompetitors(productName) {
+  const url = 'https:/janetan--/itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+```
 
 > In Homework 1, you will be asked to upload the link of your own branch.
 
