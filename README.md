@@ -221,17 +221,17 @@ temperature: 0,
 ## 4. Merge Your Branch into Main
 You can visit your branch through https://janetan--itom6219.netlify.app/. If this version is approved by your team, you can further merge it to the main and visit it through https://itom6219.netlify.app/.
 
-** Step 1 **: Go to the "Pull requests" tab. 
+**Step1** : Go to the "Pull requests" tab. 
 
  
 <img src="pics/week1-pr.png" alt="Description" width="80%">
 
-** Step 2 **: Then, create a "New pull request" by comparing and reviewing the base:main with the compare:janetan branch. 
+**Step 2** : Then, create a "New pull request" by comparing and reviewing the base:main with the compare:janetan branch. 
 
  
 <img src="pics/week1-pr2.png" alt="Description" width="60%">
-** Step 3 **: After creating a pull request, comparing and reviewing will be done, before you can confirm the "Merge pull request" to merge commits of this branch to main.
+**Step 3** : After creating a pull request, comparing and reviewing will be done, before you can confirm the "Merge pull request" to merge commits of this branch to main.
 
  
 <img src="pics/week1-pr3.png" alt="Description" width="50%">
-** Step 4 **: Make sure to change the URLs back by removing your branch name and hyphens.
+**Step 4** : Make sure to change the URLs back by removing your branch name and hyphens.
