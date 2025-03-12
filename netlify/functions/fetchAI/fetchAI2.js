@@ -1,6 +1,8 @@
 import { traceable } from "langsmith/traceable";
 import OpenAI from "openai";
-
+import { wrapOpenAI } from "langsmith/wrappers";
+ 
+//add
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
@@ -29,7 +31,7 @@ const generateAdCopy = traceable(async (productName, productDesc, targetMarket) 
         temperature: 0,
     });
 
-    return response.choices[0].text.trim();
+    return response;
 }, { name: "generateAdCopy",
     project: process.env.LANGSMITH_PROJECT_PROMOTION
  }); // LangSmith traces this function
