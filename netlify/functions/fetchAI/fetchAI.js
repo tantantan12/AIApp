@@ -1,4 +1,4 @@
-import { traceable } from "langsmith";
+import { traceable } from "langsmith/traceable";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
