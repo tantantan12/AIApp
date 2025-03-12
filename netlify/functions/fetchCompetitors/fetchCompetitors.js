@@ -2,10 +2,22 @@ const { Configuration, OpenAIApi } = require('openai');
 const { getJson } = require("serpapi");
 
 const OpenAI = require("openai");
+const { wrapOpenAI } = require("langsmith");
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
+
+const openai = wrapOpenAI(
+    new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+    }),
+    {
+        tracing: true,  // Always enable tracing
+        endpoint: "https://api.smith.langchain.com", // Hardcoded LangSmith API endpoint
+        apiKey: process.env.LANGSMITH_API_KEY,
+        project: process.env.LANGSMITH_PROJECT_COMPETITOR
+        ,
+    }
+);
+
 
 const SERPAPI_KEY = process.env.SERP_API_KEY;
 

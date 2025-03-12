@@ -17,6 +17,7 @@
     "@langchain/community": "^0.3.33",
     "dotenv": "^16.4.7",
     "langchain": "^0.3.19",
+    "langsmith": "^0.3.13",
     "openai": "^4.86.1",
     "serpapi": "^2.1.0"
   },
