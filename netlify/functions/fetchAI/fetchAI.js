@@ -1,28 +1,28 @@
-const { Configuration, OpenAIApi } = require('openai');
+const { OpenAI } = require("openai");
+const { traceable } = require("langsmith"); // Corrected import
+require("dotenv").config();
 
-const OpenAI = require("openai");
+// Initialize OpenAI without wrapOpenAI (which does not exist in JS)
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
-const { wrapOpenAI } = require("langsmith");
+// Define a traceable function for API calls
+const pipeline = traceable(async (prompt) => {
+    const response = await openai.completions.create({
+        model: "gpt-3.5-turbo-instruct",
+        prompt: prompt,
+        presence_penalty: 0,
+        frequency_penalty: 0.3,
+        max_tokens: 100,
+        temperature: 0,
+    });
 
+    return response.choices[0].text.trim();
+});
 
-const openai = wrapOpenAI(
-    new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-    }),
-    {
-        tracing: true,  // Always enable tracing
-        endpoint: "https://api.smith.langchain.com", // Hardcoded LangSmith API endpoint
-        apiKey: process.env.LANGSMITH_API_KEY,
-        project: process.env.LANGSMITH_PROJECT_PROMOTION,
-    }
-);
-
-
-
-  
 const handler = async (event) => {
-    
-    try { 
+    try {
         const requestBody = JSON.parse(event.body);
         const { productName, productDesc, targetMarket } = requestBody;
 
@@ -30,7 +30,7 @@ const handler = async (event) => {
             return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
         }
 
-        const prompt = `Use a product name, a product description and a target market to create advertising copy for a product.
+        const prompt = `Use a product name, a product description, and a target market to create advertising copy for a product.
             ###
             product name: EcoPure Hydration Bottle
             product description: A sustainable, vacuum-insulated water bottle that keeps drinks cold for 48 hours and hot for 24 hours. 
@@ -39,28 +39,19 @@ const handler = async (event) => {
             ###
             product name: ${productName}
             product description: ${productDesc}
-            product traget market: ${targetMarket}
+            product target market: ${targetMarket}
             advertising copy: 
-            `;
+        `;
 
-        const response = await openai.completions.create({
-            model: 'gpt-3.5-turbo-instruct',
-            prompt: prompt,
-            presence_penalty: 0,
-            frequency_penalty: 0.3,
-            max_tokens: 100,
-            temperature: 0,
-        })
+        const reply = await pipeline(prompt); // Now tracing is enabled
+
         return {
             statusCode: 200,
-            body: JSON.stringify({
-                reply: response    //reply: response.choices[0].text.trim()  
-            })
-        }
-        
+            body: JSON.stringify({ reply }),
+        };
     } catch (error) {
-        return { statusCode: 500, body: error.toString() }
+        return { statusCode: 500, body: error.toString() };
     }
-}
+};
 
-module.exports = { handler }
+module.exports = { handler };
