@@ -1,47 +1,17 @@
-const { Configuration, OpenAIApi } = require("openai");
+const { Configuration, OpenAIApi } = require('openai');
 const { getJson } = require("serpapi");
-const { traceable } = require("langsmith"); // Import correct LangSmith function
-require("dotenv").config();
 
-const openai = new OpenAIApi(
-    new Configuration({
-        apiKey: process.env.OPENAI_API_KEY,
-    })
-);
+const OpenAI = require("openai");
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
 
 const SERPAPI_KEY = process.env.SERP_API_KEY;
 
-// Function to truncate text for token limits
 function truncateText(text, maxLength = 200) {
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
-
-// 🚀 Wrapping the OpenAI calls with LangSmith tracing
-const generateRefinedSearchQuery = traceable(async (productName, productDesc, targetMarket) => {
-    const response = await openai.createCompletion({
-        model: "gpt-3.5-turbo-instruct",
-        prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
-        presence_penalty: 0,
-        frequency_penalty: 0.3,
-        max_tokens: 50,
-        temperature: 0
-    });
-
-    return response.data.choices[0].text.trim();
-});
-
-const formatSearchResults = traceable(async (topResults) => {
-    const response = await openai.createCompletion({
-        model: "gpt-3.5-turbo-instruct",
-        prompt: `Summarize these Google Shopping search results by listing the title of the top three products in bullet points:\n${JSON.stringify(topResults)}\nLimit it to the top 3 options.`,
-        presence_penalty: 0,
-        frequency_penalty: 0.3,
-        max_tokens: 200,
-        temperature: 0
-    });
-
-    return response.data.choices[0].text;
-});
 
 const handler = async (event) => {
     try {
@@ -59,12 +29,21 @@ const handler = async (event) => {
 
         console.error("Processing Product Search for:", productName, productDesc, targetMarket);
 
-        // Step 1: Generate a refined search query
-        const refinedQuery = await generateRefinedSearchQuery(productName, productDesc, targetMarket);
+        //  Step 1: Generate a refined search query using OpenAI
+        const refineSearch = await openai.completions.create({
+            model: "gpt-3.5-turbo-instruct",
+            prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
+            presence_penalty: 0,
+            frequency_penalty: 0.3,
+            max_tokens: 50,
+            temperature: 0
+        });
+
+        const refinedQuery = refineSearch.choices[0].text.trim();
 
         console.error("Refined Search Query:", refinedQuery);
 
-        // Step 2: Perform Google Shopping Search
+        //  Step 2: Perform Google Shopping Search
         const searchResults = await getJson({
             engine: "google_shopping",
             api_key: SERPAPI_KEY,
@@ -73,22 +52,30 @@ const handler = async (event) => {
 
         console.error("Raw Search Results:", searchResults["shopping_results"]);
 
-        // Limit results to prevent exceeding OpenAI's token limit
+        //  Limit results to prevent exceeding OpenAI's 4097 token limit
         const topResults = searchResults["shopping_results"]?.slice(0, 5).map(item => ({
             title: item.title,
+//            link: item.link,
             price: item.price,
             description: truncateText(item.description || "", 200) // Truncate descriptions
         })) || [];
 
-        // Step 3: Format search results
-        const formattedResponse = await formatSearchResults(topResults);
+        // Step 3: Format search results using OpenAI
+        const formattedResponse = await openai.completions.create({
+            model: "gpt-3.5-turbo-instruct",
+            prompt: `Summarize these Google Shopping search results by listing the title of the top three products in bullet points:\n${JSON.stringify(topResults)}\nLimit it to the top 3 options.`,
+            presence_penalty: 0,
+            frequency_penalty: 0.3,
+            max_tokens: 200,
+            temperature: 0
+        });
 
-        console.error("Reformatted Response:", formattedResponse);
+        console.error("Reformatted Response:", formattedResponse.choices[0].text);
 
         return {
             statusCode: 200,
             body: JSON.stringify({
-                results: formattedResponse
+                results: formattedResponse.choices[0].text
             })
         };
     } catch (error) {
