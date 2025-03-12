@@ -1,4 +1,4 @@
-import { traceable } from "@langchain/langsmith";
+import { traceable } from "langsmith";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
