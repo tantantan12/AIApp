@@ -1,8 +1,8 @@
 import { traceable } from "langsmith/traceable";
 import OpenAI from "openai";
 import { wrapOpenAI } from "langsmith/wrappers";
-
-
+ 
+//add
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
