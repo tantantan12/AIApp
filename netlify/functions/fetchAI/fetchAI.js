@@ -3,8 +3,7 @@ import { wrapOpenAI } from "langsmith/wrappers";
  
 
 
-const openai = wrapOpenAI(new OpenAI(apiKey: process.env.OPENAI_API_KEY));
-
+ 
   
 const handler = traceable(async (event) => {
     
