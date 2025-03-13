@@ -38,8 +38,12 @@ const handler = traceable(async (event) => {
             max_tokens: 100,
             temperature: 0,
         })
-        return response;    //reply: response.choices[0].text.trim()  
-
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                reply: response    //reply: response.choices[0].text.trim()  
+            })
+        }
         
     } catch (error) {
         return { statusCode: 500, body: error.toString() }
