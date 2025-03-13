@@ -2,7 +2,9 @@ import OpenAI from "openai";
 import { traceable } from "langsmith/traceable";
  
 
-
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
  
   
 const handler = traceable(async (event) => {
