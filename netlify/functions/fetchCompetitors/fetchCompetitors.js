@@ -2,6 +2,7 @@ const { Configuration, OpenAIApi } = require('openai');
 const { getJson } = require("serpapi");
 
 const OpenAI = require("openai");
+
 import { traceable } from "langsmith/traceable";
  
 const openai = new OpenAI({
