@@ -3,8 +3,7 @@ const { getJson } = require("serpapi");
 
 const OpenAI = require("openai");
 
-
-const traceable =require("langsmith/traceable");
+import { traceable } from "langsmith/traceable";
  
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
