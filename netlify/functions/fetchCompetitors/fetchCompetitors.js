@@ -1,7 +1,6 @@
-const { Configuration, OpenAIApi } = require('openai');
-const { getJson } = require("serpapi");
-
-const OpenAI = require("openai");
+import { Configuration, OpenAIApi } from "openai";
+import { getJson } from "serpapi";
+import OpenAI from "openai";
 
 import { traceable } from "langsmith/traceable";
  
