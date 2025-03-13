@@ -2,7 +2,8 @@ const { Configuration, OpenAIApi } = require('openai');
 const { getJson } = require("serpapi");
 
 const OpenAI = require("openai");
-
+import { traceable } from "langsmith/traceable";
+ 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
@@ -13,7 +14,7 @@ function truncateText(text, maxLength = 200) {
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
 
-const handler = async (event) => {
+const handler = traceable(async (event) => {
     try {
         if (!event.body) {
             console.error("Error: event.body is undefined or empty");
@@ -82,6 +83,8 @@ const handler = async (event) => {
         console.error("OpenAI API Error:", error);
         return { statusCode: 500, body: JSON.stringify({ error: error.toString() }) };
     }
-};
+}, { name: "generateCompetitors",
+    project: process.env.LANGSMITH_PROJECT
+ });
 
 module.exports = { handler };
