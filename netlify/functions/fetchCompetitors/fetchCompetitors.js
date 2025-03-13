@@ -1,8 +1,10 @@
-import { Configuration, OpenAIApi } from "openai";
-import { getJson } from "serpapi";
-import OpenAI from "openai";
+const { Configuration, OpenAIApi } = require('openai');
+const { getJson } = require("serpapi");
 
-import { traceable } from "langsmith/traceable";
+const OpenAI = require("openai");
+
+
+const traceable =require("langsmith/traceable");
  
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
