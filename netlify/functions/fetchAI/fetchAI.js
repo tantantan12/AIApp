@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { wrapOpenAI } from "langsmith/wrappers";
+import { traceable } from "langsmith/traceable";
  
 
 
