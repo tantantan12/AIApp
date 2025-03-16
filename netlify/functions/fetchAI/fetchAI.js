@@ -13,9 +13,7 @@ const handler = traceable(async (event) => {
         const requestBody = JSON.parse(event.body);
         const { characterName1,characterName2, sceneDesc, conflict } = requestBody;
 
-        if (!productName || !productDesc || !targetMarket) {
-            return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
-        }
+
 
         const input = `Use a positive character, a negative character, a scene, and a conflict to come up with a short story.
            
