@@ -9,13 +9,13 @@ document.getElementById("again-btn").addEventListener("click", () => {
 })
 
 document.getElementById("advertising-btn").addEventListener("click", async() => {
-
-  const productName = document.getElementById("name").value;
-  const productDesc = document.getElementById("desc").value;
-  const productTarget = document.getElementById("target").value;
+  const characterName1 = document.getElementById("name1").value;
+  const characterName2 = document.getElementById("name2").value;
+  const sceneDesc = document.getElementById("desc").value;
+  const conflict = document.getElementById("target").value;
   
   try {
-    const response = await fetchReply(productName, productDesc, productTarget);
+    const response = await fetchReply(characterName1,characterName2, sceneDesc, conflict);
     // Insert the formatted list into ad-output
     document.getElementById('ad-output').insertAdjacentText('beforeend', response);
     document.getElementById('ad-input').style.display = 'none';
@@ -29,14 +29,14 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
 
 
 
-async function fetchReply(productName, productDesc, targetMarket){
+async function fetchReply(characterName1,characterName2, sceneDesc, conflict){
   const url = 'https://story--itom6219.netlify.app/.netlify/functions/fetchAI';
 
   try {
       const response = await fetch(url, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ productName, productDesc, targetMarket })
+          body: JSON.stringify({ characterName1,characterName2, sceneDesc, conflict})
       });
 
       const data = await response.json();
