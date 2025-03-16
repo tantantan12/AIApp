@@ -10,12 +10,13 @@ document.getElementById("again-btn").addEventListener("click", () => {
 
 document.getElementById("advertising-btn").addEventListener("click", async() => {
 
-  const productName = document.getElementById("name").value;
-  const productDesc = document.getElementById("desc").value;
-  const productTarget = document.getElementById("target").value;
+  const positiveCharacter = document.getElementById("name1").value;
+  const negativeCharacter = document.getElementById("name2").value;
+  const scene = document.getElementById("desc").value;
+  const plot = document.getElementById("target").value;
   
   try {
-    const response = await fetchReply(productName, productDesc, productTarget);
+    const response = await fetchReply(positiveCharacter, negativeCharacter, scene,plot);
     // Insert the formatted list into ad-output
     document.getElementById('ad-output').insertAdjacentText('beforeend', response);
     document.getElementById('ad-input').style.display = 'none';
@@ -29,14 +30,14 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
 
 
 
-async function fetchReply(productName, productDesc, targetMarket){
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI';
+async function fetchReply(positiveCharacter, negativeCharacter, scene,plot){
+  const url = 'https://storyteller--itom6219.netlify.app/.netlify/functions/fetchAI';
 
   try {
       const response = await fetch(url, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ productName, productDesc, targetMarket })
+          body: JSON.stringify({ positiveCharacter, negativeCharacter, scene,plot })
       });
 
       const data = await response.json();
@@ -51,56 +52,3 @@ async function fetchReply(productName, productDesc, targetMarket){
   }
 }
 
-
-document.getElementById("competitor-btn").addEventListener("click", async () => {
-  const productName = document.getElementById("name").value;
-  const productDesc = document.getElementById("desc").value;
-  const targetMarket = document.getElementById("target").value;
-
-  if (!productName || !productDesc || !targetMarket) {
-      alert("Please fill in all fields.");
-      return;
-  }
-
-  //document.getElementById("product-results").innerHTML = "Searching...";
-
-  try {
-      const response = await fetchCompetitors(productName, productDesc, targetMarket);
-      // Insert the formatted list into ad-output
-      document.getElementById('ad-output').insertAdjacentHTML('beforeend', `<ul>${response}</ul>`);
-      document.getElementById('ad-input').style.display = 'none';
-      document.getElementById('ad-output').style.display = 'block';
-      console.log("FULL PRODUCT RESPONSE:", response);
-  } catch (error) {
-      console.error("Error Fetching Products:", error);
-      alert("An error occurred while searching for products.");
-  }
-});
-
-
-
-
-
-async function fetchCompetitors(productName, productDesc, targetMarket ) {
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
-
-  try {
-      const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ productName, productDesc, targetMarket })
-      });
-
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      // Extract and format bullet points
-      const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
-      return formattedText;
-  } catch (error) {
-      console.error("Fetch Products Error:", error);
-      throw error;
-  }
-}
