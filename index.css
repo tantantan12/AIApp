@@ -132,7 +132,6 @@ label {
     border-radius: 5px
 }
 }
-
 .rating {
   display: flex;
   justify-content: center;
@@ -145,16 +144,10 @@ label {
 
 .like, .dislike {
   cursor: pointer;
-  font-size: 2rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.like:hover, .dislike:hover {
-  color: #2EBDD1;
-  transform: scale(1.1);
+  font-size: 2rem; /* Keeps the same size */
+  transition: color 0.2s ease-in-out;
 }
 
 .active {
-  color: #2EBDD1;
+  color: #2EBDD1; /* Change color when clicked */
 }
-
