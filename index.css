@@ -146,8 +146,9 @@ label {
   cursor: pointer;
   font-size: 2rem; /* Keeps the same size */
   transition: color 0.2s ease-in-out;
+  color: black; /* Ensure default color */
 }
 
-.active {
-  color: #2EBDD1; /* Change color when clicked */
+.like.active, .dislike.active {
+  color: #2EBDD1 ; /* Ensure the color change applies */
 }
