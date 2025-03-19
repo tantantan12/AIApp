@@ -17,13 +17,16 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
     const response = await fetchReply(productName, productDesc, productTarget);
     // Insert the formatted list into ad-output
     document.getElementById('ad-output').insertAdjacentText('beforeend', response);
+
+   
+
   // Show thumbs up/down buttons
         document.getElementById("ad-output").insertAdjacentHTML('beforeend', `
             <div id="feedback-container" class="rating">
-                <p>Was this result helpful?</p>
-                <div class="like" id="thumbs-up">👍</div>
-                <div class="dislike" id="thumbs-down">👎</div>
-            </div>
+    <p>Was this result helpful?</p>
+    <div class="like" id="thumbs-up"><span>👍</span></div>
+    <div class="dislike" id="thumbs-down"><span>👎</span></div>
+     </div>
         `);
 
         // Add event listeners
