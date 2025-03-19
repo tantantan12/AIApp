@@ -17,7 +17,7 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
     const response = await fetchReply(productName, productDesc, productTarget);
     // Insert the formatted list into ad-output
     document.getElementById('ad-output').insertAdjacentText('beforeend', response);
-   // Show thumbs up/down buttons
+  // Show thumbs up/down buttons
         document.getElementById("ad-output").insertAdjacentHTML('beforeend', `
             <div id="feedback-container" class="rating">
                 <p>Was this result helpful?</p>
@@ -26,7 +26,7 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
             </div>
         `);
 
-        // Add event listeners for thumbs up/down
+        // Add event listeners
         document.getElementById("thumbs-up").addEventListener("click", () => {
             document.getElementById("thumbs-up").classList.add("active");
             document.getElementById("thumbs-down").classList.remove("active");
@@ -41,6 +41,11 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
             disableFeedback();
         });
 
+        function disableFeedback() {
+            // Keep the selected color but disable further clicks
+            document.getElementById("thumbs-up").style.pointerEvents = "none";
+            document.getElementById("thumbs-down").style.pointerEvents = "none";
+        }
     document.getElementById('ad-input').style.display = 'none';
     document.getElementById('ad-output').style.display = 'block';
     console.log("FULL PRODUCT RESPONSE:", response);
