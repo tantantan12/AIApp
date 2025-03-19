@@ -18,20 +18,32 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
     // Insert the formatted list into ad-output
     document.getElementById('ad-output').insertAdjacentText('beforeend', response);
     // Show feedback buttons after output is displayed
-    document.getElementById("ad-output").insertAdjacentHTML('beforeend', `
-             <p>Was this result helpful?</p>
-            <div class="rating">
-             <!-- Thumbs up -->
-             <div class="like grow">
-              <i class="fa fa-thumbs-up fa-3x like" aria-hidden="true"></i>
-              </div>
-             <!-- Thumbs down -->
-            <div class="dislike grow">
-             <i class="fa fa-thumbs-down fa-3x like" aria-hidden="true"></i>
+        document.getElementById("ad-output").insertAdjacentHTML('beforeend', `
+            <div id="feedback-container" class="rating">
+                <p>Was this result helpful?</p>
+                <div class="like grow" id="thumbs-up">
+                    <i class="fa fa-thumbs-up fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="dislike grow" id="thumbs-down">
+                    <i class="fa fa-thumbs-down fa-2x" aria-hidden="true"></i>
+                </div>
             </div>
-            </div>
-
         `);
+
+        // Add event listeners for thumbs up/down
+        document.getElementById("thumbs-up").addEventListener("click", () => {
+            document.getElementById("thumbs-up").classList.add("active");
+            document.getElementById("thumbs-down").classList.remove("active");
+            gtag('event', 'feedback', { 'satisfied': 1 });
+            disableFeedback();
+        });
+
+        document.getElementById("thumbs-down").addEventListener("click", () => {
+            document.getElementById("thumbs-down").classList.add("active");
+            document.getElementById("thumbs-up").classList.remove("active");
+            gtag('event', 'feedback', { 'satisfied': 0 });
+            disableFeedback();
+        });
 
     document.getElementById('ad-input').style.display = 'none';
     document.getElementById('ad-output').style.display = 'block';
