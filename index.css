@@ -144,11 +144,14 @@ label {
 
 .like, .dislike {
   cursor: pointer;
-  font-size: 2rem; /* Keeps the same size */
+  font-size: 2rem;
   transition: color 0.2s ease-in-out;
-  color: black; /* Ensure default color */
 }
 
-.like.active, .dislike.active {
-  color: #2EBDD1 ; /* Ensure the color change applies */
+.like span, .dislike span {
+  color: black; /* Default color */
+}
+
+.like.active span, .dislike.active span {
+  color: #2EBDD1 !important; /* Change color when selected */
 }
