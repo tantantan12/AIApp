@@ -12,7 +12,11 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
   const productName = document.getElementById("name").value;
   const productDesc = document.getElementById("desc").value;
   const productTarget = document.getElementById("target").value;
-  
+
+  gtag('event', 'submit', {
+      'productName': productName
+   });
+ 
   try {
     const response = await fetchReply(productName, productDesc, productTarget);
     // Insert the formatted list into ad-output
