@@ -46,11 +46,23 @@ const handler = traceable(async (event) => {
         console.error("Refined Search Query:", refinedQuery);
 
         //  Step 2: Perform Google Shopping Search
+
+
         const searchResults = await getJson({
             engine: "google_shopping",
             api_key: SERPAPI_KEY,
             q: refinedQuery
         });
+
+     // added on July 3, 2025
+        const shoppingResults = searchResults["shopping_results"];
+        if (!shoppingResults || shoppingResults.length === 0) {
+         return {
+         statusCode: 200,
+        body: JSON.stringify({ results: "No competitors found. Try refining your product description." })
+        };
+        }
+
 
         console.error("Raw Search Results:", searchResults["shopping_results"]);
 
