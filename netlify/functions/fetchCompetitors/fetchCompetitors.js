@@ -76,7 +76,7 @@ const handler = traceable(async (event) => {
 
         // Step 3: Format search results using OpenAI
         const formattedResponse = await openai.completions.create({
-            model: "gpt-3.5-turbo-instruct",
+            model: "text-davinci-003",    //   gpt-3.5-turbo-instruct
             prompt: `Summarize these Google Shopping search results by listing the title of the top three products in bullet points:\n${JSON.stringify(topResults)}\nLimit it to the top 3 options.`,
             presence_penalty: 0,
             frequency_penalty: 0.3,
