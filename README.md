@@ -41,7 +41,7 @@ When accessing your Github repo, you will see the following file structure:
  
 The figure below summarized the function of the major files.
 
-![alt text](pics/github_function.png)
+![alt text](pics/week1-structure.png)
 
 Below is a tutorial about the customization process.
 
