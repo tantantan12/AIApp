@@ -27,7 +27,7 @@ async function fetchReply(){
   const url = 'https://janetan--itom6219.netlify.app/.netlify/functions/fetchAI';
 
 async function fetchCompetitors(productName) {
-  const url = 'https:/janetan--/itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+  const url = 'https:/janetan--itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 ```
 
 > In Homework 1, you will be asked to upload the link of your own branch.
