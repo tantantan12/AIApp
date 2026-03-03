@@ -25,7 +25,7 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
    
 
   // Show thumbs up/down buttons
-        document.getElementById("ad-output").insertAdjacentHTML('beforeend', `
+        /*document.getElementById("ad-output").insertAdjacentHTML('beforeend', `
             <div id="feedback-container" class="rating">
     <p>Was this result helpful?</p>
     <div class="like" id="thumbs-up"><span>👍</span></div>
@@ -52,7 +52,7 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
             // Keep the selected color but disable further clicks
             document.getElementById("thumbs-up").style.pointerEvents = "none";
             document.getElementById("thumbs-down").style.pointerEvents = "none";
-        }
+        }*/
     document.getElementById('ad-input').style.display = 'none';
     document.getElementById('ad-output').style.display = 'block';
     console.log("FULL PRODUCT RESPONSE:", response);
