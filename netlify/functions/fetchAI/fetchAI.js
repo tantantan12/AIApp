@@ -1,15 +1,13 @@
-const { Configuration, OpenAIApi } = require('openai');
-
-const OpenAI = require("openai");
+import OpenAI from "openai";
+import { traceable } from "langsmith/traceable";
+ 
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
-
-
-
+ 
   
-const handler = async (event) => {
+const handler = traceable(async (event) => {
     
     try { 
         const requestBody = JSON.parse(event.body);
@@ -19,7 +17,7 @@ const handler = async (event) => {
             return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
         }
 
-        const prompt = `Use a product name, a product description and a target market to create advertising copy for a product.
+        const input = `Use a product name, a product description and a target market to create advertising copy for a product.
             ###
             product name: EcoPure Hydration Bottle
             product description: A sustainable, vacuum-insulated water bottle that keeps drinks cold for 48 hours and hot for 24 hours. 
@@ -34,7 +32,7 @@ const handler = async (event) => {
 
         const response = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
-            prompt: prompt,
+            prompt: input,
             presence_penalty: 0,
             frequency_penalty: 0.3,
             max_tokens: 100,
@@ -50,6 +48,8 @@ const handler = async (event) => {
     } catch (error) {
         return { statusCode: 500, body: error.toString() }
     }
-}
+}, { name: "generateAdCopy",
+    project: process.env.LANGSMITH_PROJECT
+ });
 
 module.exports = { handler }
