@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { getJson } from "serpapi";
 import { traceable } from "langsmith/traceable";
 import { wrapOpenAI } from "langsmith/wrappers";
+import { getCurrentRunTree } from "langsmith/singletons";
 
 const openai = wrapOpenAI(
   new OpenAI({
@@ -60,10 +61,13 @@ const handler = traceable(
 
       const shoppingResults = searchResults["shopping_results"];
       if (!shoppingResults || shoppingResults.length === 0) {
+        const runTree = getCurrentRunTree();
+
         return {
           statusCode: 200,
           body: JSON.stringify({
-            results: "No competitors found. Try refining your product description."
+            results: "No competitors found. Try refining your product description.",
+            runId: runTree?.id || null
           })
         };
       }
@@ -90,10 +94,13 @@ const handler = traceable(
 
       console.log("Reformatted Response:", formattedResponse.choices[0].text);
 
+      const runTree = getCurrentRunTree();
+
       return {
         statusCode: 200,
         body: JSON.stringify({
-          results: formattedResponse.choices[0].text
+          results: formattedResponse.choices[0].text,
+          runId: runTree?.id || null
         })
       };
     } catch (error) {
