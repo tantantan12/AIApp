@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { traceable } from "langsmith/traceable";
 import { wrapOpenAI } from "langsmith/wrappers";
+import { getCurrentRunTree } from "langsmith/singletons";
 
 const openai = wrapOpenAI(
   new OpenAI({
@@ -15,7 +16,10 @@ const handler = traceable(async (event) => {
         const { productName, productDesc, targetMarket } = requestBody;
 
         if (!productName || !productDesc || !targetMarket) {
-            return { statusCode: 400, body: JSON.stringify({ error: "Missing required fields" }) };
+            return {
+              statusCode: 400,
+              body: JSON.stringify({ error: "Missing required fields" })
+            };
         }
 
         const input = `Use a product name, a product description and a target market to create advertising copy for a product.
@@ -33,15 +37,24 @@ advertising copy:
             temperature: 0,
         });
 
+        // capture LangSmith run id
+        const runTree = getCurrentRunTree();
+
         return {
             statusCode: 200,
             body: JSON.stringify({
-                reply: response
+                outputText: response.choices?.[0]?.text?.trim() || "",
+                runId: runTree?.id || null
             })
         };
 
     } catch (error) {
-        return { statusCode: 500, body: error.toString() }
+
+        return {
+          statusCode: 500,
+          body: JSON.stringify({ error: error.toString() })
+        };
+
     }
 
 }, {
