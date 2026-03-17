@@ -9,9 +9,11 @@ document.getElementById("again-btn").addEventListener("click", () => {
 
 document.getElementById("advertising-btn").addEventListener("click", async() => {
 
-  gtag('event', 'submit', {
+  gtag('event', 'submit_test', {
     'hour_of_day': new Date().getHours()
   });
+
+ gtag('event', 'submit');
 
   const productName = document.getElementById("name").value;
   const productDesc = document.getElementById("desc").value;
