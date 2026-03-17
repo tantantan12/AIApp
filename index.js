@@ -13,7 +13,9 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
     'hour_of_day': new Date().getHours()
   });
 
- gtag('event', 'submit');
+   gtag('event', 'submit', {
+        'productName': productName
+      });
 
   const productName = document.getElementById("name").value;
   const productDesc = document.getElementById("desc").value;
