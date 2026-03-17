@@ -13,9 +13,7 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
   const productDesc = document.getElementById("desc").value;
   const productTarget = document.getElementById("target").value;
 
-  gtag('event', 'submit', {
-      'productName': productName
-   });
+
  
   try {
     const response = await fetchReply(productName, productDesc, productTarget);
