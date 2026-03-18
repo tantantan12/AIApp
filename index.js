@@ -13,15 +13,15 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
     'hour_of_day': new Date().getHours()
   });
 
-   gtag('event', 'submit', {
-        'productName': productName
-      });
+ 
 
   const productName = document.getElementById("name").value;
   const productDesc = document.getElementById("desc").value;
   const productTarget = document.getElementById("target").value;
 
-
+  gtag('event', 'submit', {
+        'productName': productName
+      });
  
   try {
     const response = await fetchReply(productName, productDesc, productTarget);
