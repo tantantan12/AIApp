@@ -1,9 +1,7 @@
  
 document.getElementById("again-btn").addEventListener("click", () => {
   location.reload();
-    gtag('event', 'again', {
-    'Experiment_Condition': '{{ getenv "BRANCH" }}'
-      });
+    gtag('event', 'again');
   
 })
 
