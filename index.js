@@ -104,12 +104,30 @@ document.getElementById("competitor-btn").addEventListener("click", async () => 
   //document.getElementById("product-results").innerHTML = "Searching...";
 
   try {
-      const response = await fetchCompetitors(productName, productDesc, targetMarket);
-      // Insert the formatted list into ad-output
-      document.getElementById('ad-output').insertAdjacentHTML('beforeend', `<ul>${response}</ul>`);
+      const products = await fetchCompetitors(productName, productDesc, targetMarket);
+      // Build DOM elements safely to avoid XSS
+      const ul = document.createElement('ul');
+      products.forEach(item => {
+          const li = document.createElement('li');
+          if (item.link) {
+              const a = document.createElement('a');
+              a.href = item.link;
+              a.target = '_blank';
+              a.rel = 'noopener noreferrer';
+              a.textContent = item.title;
+              li.appendChild(a);
+          } else {
+              li.textContent = item.title;
+          }
+          if (item.price) {
+              li.appendChild(document.createTextNode(` — ${item.price}`));
+          }
+          ul.appendChild(li);
+      });
+      document.getElementById('ad-output').appendChild(ul);
       document.getElementById('ad-input').style.display = 'none';
       document.getElementById('ad-output').style.display = 'block';
-      console.log("FULL PRODUCT RESPONSE:", response);
+      console.log("FULL PRODUCT RESPONSE:", products);
   } catch (error) {
       console.error("Error Fetching Products:", error);
       alert("An error occurred while searching for products.");
@@ -135,9 +153,7 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
-      // Extract and format bullet points
-      const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
-      return formattedText;
+      return data.results;
   } catch (error) {
       console.error("Fetch Products Error:", error);
       throw error;

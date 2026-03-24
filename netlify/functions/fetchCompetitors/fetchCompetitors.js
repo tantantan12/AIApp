@@ -70,30 +70,19 @@ const handler = traceable(
 
       console.log("Raw Search Results:", shoppingResults);
 
-      const topResults = shoppingResults.slice(0, 5).map((item) => ({
+      const topResults = shoppingResults.slice(0, 3).map((item) => ({
         title: item.title,
         price: item.price,
+        link: item.link,
         description: truncateText(item.description || "", 200)
       }));
 
-      // Step 3: Summarize with OpenAI
-      const formattedResponse = await openai.completions.create({
-        model: "gpt-3.5-turbo-instruct",
-        prompt: `Summarize these Google Shopping search results by listing the title of the top three products in bullet points:\n${JSON.stringify(
-          topResults
-        )}\nLimit it to the top 3 options.`,
-        presence_penalty: 0,
-        frequency_penalty: 0.3,
-        max_tokens: 200,
-        temperature: 0
-      });
-
-      console.log("Reformatted Response:", formattedResponse.choices[0].text);
+      console.log("Top Results:", topResults);
 
       return {
         statusCode: 200,
         body: JSON.stringify({
-          results: formattedResponse.choices[0].text
+          results: topResults
         })
       };
     } catch (error) {
