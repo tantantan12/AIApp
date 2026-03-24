@@ -41,7 +41,7 @@ const handler = traceable(
       // Step 1: Refine search query
       const refineSearch = await openai.completions.create({
         model: "gpt-3.5-turbo-instruct",
-        prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
+        prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}$`,
         presence_penalty: 0,
         frequency_penalty: 0.3,
         max_tokens: 50,
@@ -63,7 +63,7 @@ const handler = traceable(
         return {
           statusCode: 200,
           body: JSON.stringify({
-            results: "No competitors found. Try refining your product description."
+            results: "<p>No competitors found. Try refining your product description.</p>"
           })
         };
       }
@@ -73,27 +73,29 @@ const handler = traceable(
       const topResults = shoppingResults.slice(0, 5).map((item) => ({
         title: item.title,
         price: item.price,
-        description: truncateText(item.description || "", 200)
+        description: truncateText(item.description || "", 200),
+        link: item.link
       }));
 
-      // Step 3: Summarize with OpenAI
-      const formattedResponse = await openai.completions.create({
-        model: "gpt-3.5-turbo-instruct",
-        prompt: `Summarize these Google Shopping search results by listing the title of the top three products in bullet points:\n${JSON.stringify(
-          topResults
-        )}\nLimit it to the top 3 options.`,
-        presence_penalty: 0,
-        frequency_penalty: 0.3,
-        max_tokens: 200,
-        temperature: 0
-      });
+      // Step 3: Build HTML output directly from topResults (top 3)
+      const top3 = topResults.slice(0, 3);
+      const htmlResults = `<ul>${top3
+        .map(
+          (item) =>
+            `<li><strong>${item.title}</strong> — ${item.price}${
+              item.link
+                ? ` <a href="${item.link}" target="_blank" rel="noopener noreferrer">View Product</a>`
+                : ""
+            }</li>`
+        )
+        .join("")}</ul>`;
 
-      console.log("Reformatted Response:", formattedResponse.choices[0].text);
+      console.log("HTML Response:", htmlResults);
 
       return {
         statusCode: 200,
         body: JSON.stringify({
-          results: formattedResponse.choices[0].text
+          results: htmlResults
         })
       };
     } catch (error) {
