@@ -69,7 +69,7 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
 
 
 async function fetchReply(productName, productDesc, targetMarket){
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchAI';
+  const url = 'https://testing_26--itom6219.netlify.app/.netlify/functions/fetchAI';
 
   try {
       const response = await fetch(url, {
@@ -121,7 +121,7 @@ document.getElementById("competitor-btn").addEventListener("click", async () => 
 
 
 async function fetchCompetitors(productName, productDesc, targetMarket ) {
-  const url = 'https://itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+  const url = 'https://testing_26--itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 
   try {
       const response = await fetch(url, {
