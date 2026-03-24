@@ -73,7 +73,8 @@ const handler = traceable(
       const topResults = shoppingResults.slice(0, 5).map((item) => ({
         title: item.title,
         price: item.price,
-        description: truncateText(item.description || "", 200)
+        description: truncateText(item.description || "", 200),
+        link: item.link || item.product_link || null
       }));
 
       // Step 3: Summarize with OpenAI
@@ -93,7 +94,8 @@ const handler = traceable(
       return {
         statusCode: 200,
         body: JSON.stringify({
-          results: formattedResponse.choices[0].text
+          results: formattedResponse.choices[0].text,
+          products: topResults.slice(0, 3)
         })
       };
     } catch (error) {

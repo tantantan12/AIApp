@@ -135,7 +135,19 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
-      // Extract and format bullet points
+      // Use structured product data with links when available, otherwise fall back to AI text
+      if (data.products && data.products.length > 0) {
+          const formattedText = data.products.map(item => {
+              const isSafeLink = item.link && /^https?:\/\//i.test(item.link);
+              const linkHtml = isSafeLink
+                  ? ` <a href="${item.link}" target="_blank" rel="noopener noreferrer">View Product</a>`
+                  : '';
+              const priceHtml = item.price ? ` - ${item.price}` : '';
+              return `<li>${item.title}${priceHtml}${linkHtml}</li>`;
+          }).join("");
+          return formattedText;
+      }
+      // Fallback: extract and format bullet points from AI-generated text
       const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
       return formattedText;
   } catch (error) {
