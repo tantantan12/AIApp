@@ -73,6 +73,7 @@ const handler = traceable(
       const topResults = shoppingResults.slice(0, 5).map((item) => ({
         title: item.title,
         price: item.price,
+        link: item.link,
         description: truncateText(item.description || "", 200)
       }));
 
@@ -93,7 +94,8 @@ const handler = traceable(
       return {
         statusCode: 200,
         body: JSON.stringify({
-          results: formattedResponse.choices[0].text
+          results: formattedResponse.choices[0].text,
+          links: topResults.slice(0, 3).map((item) => item.link)
         })
       };
     } catch (error) {

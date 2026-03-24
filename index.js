@@ -135,8 +135,20 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
-      // Extract and format bullet points
-      const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
+      // Extract and format bullet points, linking each item to its product page
+      const lines = data.results.split("\n").filter(item => item.trim() !== "");
+      const links = data.links || [];
+      const escapeHtml = (str) =>
+        str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      const formattedText = lines.map((item, index) => {
+        const rawLink = links[index];
+        const text = escapeHtml(item.trim());
+        // Only use the link if it is a safe http/https URL
+        const safeLink = rawLink && /^https?:\/\//i.test(rawLink) ? escapeHtml(rawLink) : null;
+        return safeLink
+          ? `<li><a href="${safeLink}" target="_blank" rel="noopener noreferrer">${text}</a></li>`
+          : `<li>${text}</li>`;
+      }).join(""); // Join into a single string
       return formattedText;
   } catch (error) {
       console.error("Fetch Products Error:", error);
