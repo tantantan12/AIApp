@@ -41,7 +41,7 @@ const handler = traceable(
       // Step 1: Refine search query
       const refineSearch = await openai.completions.create({
         model: "gpt-3.5-turbo-instruct",
-        prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}$`,
+        prompt: `Refine this product search query for Google Shopping:\nProduct Name: ${productName}\nDescription: ${productDesc}\nTarget Market: ${targetMarket}`,
         presence_penalty: 0,
         frequency_penalty: 0.3,
         max_tokens: 50,
@@ -74,7 +74,7 @@ const handler = traceable(
         title: item.title,
         price: item.price,
         description: truncateText(item.description || "", 200),
-        link: item.link
+        link: item.product_link
       }));
 
       // Step 3: Build HTML output directly from topResults (top 3)
