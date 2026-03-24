@@ -135,8 +135,19 @@ async function fetchCompetitors(productName, productDesc, targetMarket ) {
       }
 
       const data = await response.json();
-      // Extract and format bullet points
-      const formattedText = data.results.split("\n").filter(item => item.trim() !== "").map(item => `<li>${item.trim()}</li>`).join(""); // Join into a single string
+      // Render each result as a clickable link
+      const formattedText = data.results
+        .map(item => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = item.link;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = item.title;
+          li.appendChild(a);
+          return li.outerHTML;
+        })
+        .join("");
       return formattedText;
   } catch (error) {
       console.error("Fetch Products Error:", error);
