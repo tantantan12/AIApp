@@ -2,8 +2,42 @@
 <html>
 
 <head>
- 
+	<script>
+(function (m, a, z, e) {
+  var s, t, u, v;
+  try {
+    t = m.sessionStorage.getItem('maze-us');
+  } catch (err) {}
+
+  if (!t) {
+    t = new Date().getTime();
+    try {
+      m.sessionStorage.setItem('maze-us', t);
+    } catch (err) {}
+  }
+
+  u = document.currentScript || (function () {
+    var w = document.getElementsByTagName('script');
+    return w[w.length - 1];
+  })();
+  v = u && u.nonce;
+
+  s = a.createElement('script');
+  s.src = z + '?apiKey=' + e;
+  s.async = true;
+  if (v) s.setAttribute('nonce', v);
+  a.getElementsByTagName('head')[0].appendChild(s);
+  m.mazeUniversalSnippetApiKey = e;
+})(window, document, 'https://snippet.maze.co/maze-universal-loader.js', '347a5974-16de-4e78-9734-5a81fb24dde7');
 </script>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w81c9a6smf");
+</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43HYZ5T4C8"></script>
 <script>
@@ -22,15 +56,16 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 	<main>
 		<section class="intro">
-			<h1>Market Minds from Cox</h1>
+			<h1>Market Minds for Dallas 2026</h1>
 			<h2>Get promotional <strong>copy</strong> for your products <strong>fast</strong></h2>
 			<h2>Get <strong> competitors </strong> of your products <strong>in real time</strong></h2>
-			<p>Powered by ITOM6219🤖</p>
+			<p>Powered by AI 🤖</p>
 		</section>
 		<section class="ad-input" id="ad-input">
 			<label for="">Product Name</label>

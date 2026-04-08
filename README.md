@@ -27,7 +27,7 @@ async function fetchReply(){
   const url = 'https://janetan--itom6219.netlify.app/.netlify/functions/fetchAI';
 
 async function fetchCompetitors(productName) {
-  const url = 'https:/janetan--/itom6219.netlify.app/.netlify/functions/fetchCompetitors';
+  const url = 'https:/janetan--itom6219.netlify.app/.netlify/functions/fetchCompetitors';
 ```
 
 > In Homework 1, you will be asked to upload the link of your own branch.
@@ -41,7 +41,7 @@ When accessing your Github repo, you will see the following file structure:
  
 The figure below summarized the function of the major files.
 
-![alt text](pics/github_function.png)
+![alt text](pics/week1-structure.png)
 
 Below is a tutorial about the customization process.
 
@@ -56,7 +56,7 @@ You can change the headlines by modifying index.html
 <section class="intro">
 			<h1>MarketMinds</h1>
 			<h2>Get promotional <strong>copy</strong> for your products <strong>fast</strong></h2>
-			<h2>Get <strong> competitors </strong> of your products <strong>in real time</strong></h2>
+			<h2>Get competitors of your products in real time</h2>
 			<p>Powered by ITOM6219🤖</p>
 		</section>
 ```
