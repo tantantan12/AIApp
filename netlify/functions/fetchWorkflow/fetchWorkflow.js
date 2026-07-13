@@ -145,6 +145,7 @@ async function runRouting(productName, productDesc, targetMarket, userRequest) {
     model: MODEL,
     messages: [{ role: "user", content: request }],
     tools: routingTools,
+    parallel_tool_calls: false,
   });
   const choice = response.choices[0].message;
 
