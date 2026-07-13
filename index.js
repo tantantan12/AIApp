@@ -22,8 +22,10 @@ document.getElementById("advertising-btn").addEventListener("click", async() => 
 
   try {
     const response = await fetchReply(productName, productDesc, productTarget);
-    // Insert the formatted list into ad-output
-    document.getElementById('ad-output').insertAdjacentText('beforeend', response);
+    // Insert as its own block so it doesn't share a line with the "Again!" button
+    const outputText = document.createElement('p');
+    outputText.textContent = response;
+    document.getElementById('ad-output').appendChild(outputText);
 
     // Remember the last generated copy + product info so Tab 4's
     // "SEO/GEO Improve" button (Day 4) has something real to compare against.
