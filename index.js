@@ -140,20 +140,26 @@ document.querySelectorAll(".tab-btn").forEach((btn) => {
 // result + explanation) read as more than one run-on blob.
 function formatOutput(text) {
   if (!text) return "";
+  const inlineFormat = (s) => s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
   let html = "";
   let inList = false;
+  const closeList = () => { if (inList) { html += "</ul>"; inList = false; } };
   for (const line of lines) {
+    const headerMatch = line.match(/^#{1,6}\s+(.*)/);
     const bulletMatch = line.match(/^(?:[-*•]|\d+[.)])\s+(.*)/);
-    if (bulletMatch) {
+    if (headerMatch) {
+      closeList();
+      html += `<p><strong>${inlineFormat(headerMatch[1])}</strong></p>`;
+    } else if (bulletMatch) {
       if (!inList) { html += '<ul class="output-list">'; inList = true; }
-      html += `<li>${bulletMatch[1]}</li>`;
+      html += `<li>${inlineFormat(bulletMatch[1])}</li>`;
     } else {
-      if (inList) { html += "</ul>"; inList = false; }
-      html += `<p>${line}</p>`;
+      closeList();
+      html += `<p>${inlineFormat(line)}</p>`;
     }
   }
-  if (inList) html += "</ul>";
+  closeList();
   return html;
 }
 
