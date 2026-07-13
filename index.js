@@ -135,6 +135,28 @@ document.querySelectorAll(".tab-btn").forEach((btn) => {
    parallelization, and a plain baseline, compared side by side.
    ============================================================ */
 
+// Splits model output into paragraphs, grouping consecutive bullet/numbered
+// lines into a <ul> so multi-part answers (e.g. the routing agent's tool
+// result + explanation) read as more than one run-on blob.
+function formatOutput(text) {
+  if (!text) return "";
+  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+  let html = "";
+  let inList = false;
+  for (const line of lines) {
+    const bulletMatch = line.match(/^(?:[-*•]|\d+[.)])\s+(.*)/);
+    if (bulletMatch) {
+      if (!inList) { html += '<ul class="output-list">'; inList = true; }
+      html += `<li>${bulletMatch[1]}</li>`;
+    } else {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<p>${line}</p>`;
+    }
+  }
+  if (inList) html += "</ul>";
+  return html;
+}
+
 document.getElementById("workflow-again-btn").addEventListener("click", () => {
   document.getElementById("workflow-input").style.display = "flex";
   document.getElementById("workflow-output").style.display = "none";
@@ -170,7 +192,7 @@ document.getElementById("workflow-btn").addEventListener("click", async () => {
 
     card.innerHTML = `
       <h4>${data.pattern}<span class="latency-badge">${data.latencyMs} ms</span></h4>
-      <p>${data.output}</p>
+      ${formatOutput(data.output)}
       <ul class="call-log">${(data.steps || []).map(s => `<li>${s}</li>`).join("")}</ul>
     `;
   } catch (error) {
