@@ -109,22 +109,31 @@ label {
 @media (min-width: 600px){
     main {
         display: flex;
+        align-items: stretch;
     }
-    
+
     .intro {
         height: 100vh;
         max-width: 50%;
         justify-content: space-around;
         background-position: bottom 50% right;
     }
-    
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+    }
+
     .ad-input {
         justify-content: center;
         align-items: center;
         margin-top: unset;
-        width: 50%;
+        width: 100%;
     }
-    
+
     p {
     background-color: white;
     color: #354CA1;
