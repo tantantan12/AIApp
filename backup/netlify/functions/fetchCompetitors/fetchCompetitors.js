@@ -1,10 +1,13 @@
 import OpenAI from "openai";
 import { getJson } from "serpapi";
 import { traceable } from "langsmith/traceable";
+import { wrapOpenAI } from "langsmith/wrappers";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+const openai = wrapOpenAI(
+  new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  })
+);
 
 const SERPAPI_KEY = process.env.SERP_API_KEY;
 
@@ -103,7 +106,7 @@ const handler = traceable(
   },
   {
     name: "generateCompetitors",
-    project: process.env.LANGSMITH_PROJECT
+    project_name: process.env.LANGSMITH_PROJECT
   }
 );
 

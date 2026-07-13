@@ -56,7 +56,7 @@ You can change the headlines by modifying index.html
 <section class="intro">
 			<h1>MarketMinds</h1>
 			<h2>Get promotional <strong>copy</strong> for your products <strong>fast</strong></h2>
-			<h2>Get <strong> competitors </strong> of your products <strong>in real time</strong></h2>
+			<h2>Get competitors of your products in real time</h2>
 			<p>Powered by ITOM6219🤖</p>
 		</section>
 ```
