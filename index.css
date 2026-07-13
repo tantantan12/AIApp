@@ -109,6 +109,8 @@ label {
 @media (min-width: 600px){
     .tab-panel.active {
         display: flex;
+        flex-direction: row;
+        align-items: stretch;
     }
 
     .intro {
@@ -118,11 +120,19 @@ label {
         background-position: bottom 50% right;
     }
 
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+    }
+
     .ad-input {
         justify-content: center;
         align-items: center;
         margin-top: unset;
-        width: 50%;
+        width: 100%;
     }
 
     p {

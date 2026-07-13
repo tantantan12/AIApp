@@ -54,19 +54,21 @@ var _hmt = _hmt || [];
 				<h2>Get <strong> competitors </strong> of your products <strong>in real time</strong></h2>
 				<p>Powered by AI 🤖</p>
 			</section>
-			<section class="ad-input" id="ad-input">
-				<label for="">Product Name</label>
-				<input type="text" placeholder="Water Bottle" id="name">
-				<label for="">Description</label>
-				<textarea placeholder="Extra big water bottle to cope with the Texas heat" id="desc"></textarea>
-				<label for="">Target market</label>
-				<textarea placeholder="College students who go to Southern Methodist University" id="target"></textarea>
-				<button id="advertising-btn">Generate Copy</button>
-				<button id="competitor-btn">Search for Competitors</button>
-			</section>
-			<section class="ad-output" id="ad-output">
-				<button id="again-btn">Again!</button>
-			</section>
+			<div class="content">
+				<section class="ad-input" id="ad-input">
+					<label for="">Product Name</label>
+					<input type="text" placeholder="Water Bottle" id="name">
+					<label for="">Description</label>
+					<textarea placeholder="Extra big water bottle to cope with the Texas heat" id="desc"></textarea>
+					<label for="">Target market</label>
+					<textarea placeholder="College students who go to Southern Methodist University" id="target"></textarea>
+					<button id="advertising-btn">Generate Copy</button>
+					<button id="competitor-btn">Search for Competitors</button>
+				</section>
+				<section class="ad-output" id="ad-output">
+					<button id="again-btn">Again!</button>
+				</section>
+			</div>
 		</section>
 
 		<!-- ============ TAB 2: AGENT WORKFLOWS (Day 2) ============ -->
@@ -77,25 +79,27 @@ var _hmt = _hmt || [];
 				<h2>Compare <strong>latency</strong> and <strong>output</strong> side by side.</h2>
 				<p>Day 2 🤖</p>
 			</section>
-			<section class="ad-input" id="workflow-input">
-				<label for="">Product Name</label>
-				<input type="text" placeholder="Water Bottle" id="workflow-name">
-				<label for="">Description</label>
-				<textarea placeholder="Extra big water bottle to cope with the Texas heat" id="workflow-desc"></textarea>
-				<label for="">Target market</label>
-				<textarea placeholder="College students who go to Southern Methodist University" id="workflow-target"></textarea>
-				<label for="">Pattern</label>
-				<select id="workflow-pattern">
-					<option value="baseline">Baseline (single call)</option>
-					<option value="chaining">Prompt Chaining</option>
-					<option value="parallel">Parallelization + Voting</option>
-					<option value="routing">Routing Agent</option>
-				</select>
-				<button id="workflow-btn">Run Workflow</button>
-			</section>
-			<section class="ad-output" id="workflow-output">
-				<button id="workflow-again-btn">Again!</button>
-			</section>
+			<div class="content">
+				<section class="ad-input" id="workflow-input">
+					<label for="">Product Name</label>
+					<input type="text" placeholder="Water Bottle" id="workflow-name">
+					<label for="">Description</label>
+					<textarea placeholder="Extra big water bottle to cope with the Texas heat" id="workflow-desc"></textarea>
+					<label for="">Target market</label>
+					<textarea placeholder="College students who go to Southern Methodist University" id="workflow-target"></textarea>
+					<label for="">Pattern</label>
+					<select id="workflow-pattern">
+						<option value="baseline">Baseline (single call)</option>
+						<option value="chaining">Prompt Chaining</option>
+						<option value="parallel">Parallelization + Voting</option>
+						<option value="routing">Routing Agent</option>
+					</select>
+					<button id="workflow-btn">Run Workflow</button>
+				</section>
+				<section class="ad-output" id="workflow-output">
+					<button id="workflow-again-btn">Again!</button>
+				</section>
+			</div>
 		</section>
 
 		<!-- ============ TAB 3: MULTI-AGENT TEAM (Day 3) ============ -->
@@ -106,18 +110,20 @@ var _hmt = _hmt || [];
 				<h2>A <strong>hallucination check</strong> and a <strong>persona panel</strong>.</h2>
 				<p>Day 3 🤖</p>
 			</section>
-			<section class="ad-input" id="team-input">
-				<label for="">Product Name</label>
-				<input type="text" placeholder="Water Bottle" id="team-name">
-				<label for="">Description</label>
-				<textarea placeholder="Extra big water bottle to cope with the Texas heat" id="team-desc"></textarea>
-				<label for="">Target market</label>
-				<textarea placeholder="College students who go to Southern Methodist University" id="team-target"></textarea>
-				<button id="team-btn">Run Campaign</button>
-			</section>
-			<section class="ad-output" id="team-output">
-				<button id="team-again-btn">Again!</button>
-			</section>
+			<div class="content">
+				<section class="ad-input" id="team-input">
+					<label for="">Product Name</label>
+					<input type="text" placeholder="Water Bottle" id="team-name">
+					<label for="">Description</label>
+					<textarea placeholder="Extra big water bottle to cope with the Texas heat" id="team-desc"></textarea>
+					<label for="">Target market</label>
+					<textarea placeholder="College students who go to Southern Methodist University" id="team-target"></textarea>
+					<button id="team-btn">Run Campaign</button>
+				</section>
+				<section class="ad-output" id="team-output">
+					<button id="team-again-btn">Again!</button>
+				</section>
+			</div>
 		</section>
 	</main>
 
